@@ -23,10 +23,11 @@ export default function Hero() {
             loop
             muted
             playsInline
+            poster="/hero-ship.png"
             className="w-full h-full object-cover scale-110 translate-y-8"
             style={{ objectPosition: 'center 85%' }}
           >
-            <source src="/hero,ship.mp4" type="video/mp4" />
+            <source src="/hero,ship_compressed.mp4" type="video/mp4" />
           </video>
         </div>
 
