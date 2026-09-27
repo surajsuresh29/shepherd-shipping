@@ -3,7 +3,7 @@ import Image from "next/image";
 const services = [
   {
     id: "air-sea",
-    title: "Air & sea freight",
+    title: "Air & Sea Freight",
     description:
       "Reliable, personalised cargo services by air and sea. Your shipment arrives on time and in the correct condition, whether it is for business or personal needs.",
     image: "/service-sea-freight.png",
@@ -15,7 +15,7 @@ const services = [
   },
   {
     id: "customs",
-    title: "Customs clearance",
+    title: "Customs Clearance",
     description:
       "An experienced team that keeps your goods moving and delivered safely.",
     image: "/service-customs.jpg",
@@ -24,7 +24,7 @@ const services = [
   },
   {
     id: "customised",
-    title: "Customised solutions",
+    title: "Customised Solutions",
     description:
       "Tailored to your business and budget, for complex supply chains.",
     image: "/service-custom-solutions.jpg",
@@ -33,7 +33,7 @@ const services = [
   },
   {
     id: "warehousing",
-    title: "3PL warehousing & distribution",
+    title: "3PL Warehousing & Distribution",
     description:
       "Safe storage and management of your goods, with warehouses at Dubai South free zone and in Guangzhou.",
     image: "/warehousing.png",
@@ -71,13 +71,11 @@ export default function Services() {
                   sizes="(max-width: 768px) 100vw, 66vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-xl font-bold text-white">
-                    {services[0].title}
-                  </h3>
-                </div>
               </div>
               <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-3">
+                  {services[0].title}
+                </h3>
                 <p className="text-white/80 text-sm leading-relaxed">
                   {services[0].description}
                 </p>

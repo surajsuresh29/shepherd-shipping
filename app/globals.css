@@ -27,6 +27,11 @@ body {
   background: #FFFFFF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: url('/cursor-plane.svg') 4 5, auto;
+}
+
+a, button, [role="button"], .cursor-pointer {
+  cursor: url('/cursor-plane-hover.svg') 4 5, pointer !important;
 }
 
 /* Smooth fade-in animation */
