@@ -81,7 +81,7 @@ export default function Locations() {
         {/* Section Header */}
         <div className="mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            Our offices and warehouses
+            Our Offices and Warehouses
           </h2>
           <p className="text-text-gray text-base leading-relaxed max-w-2xl">
             Find the Shepherd team nearest to you across the UAE, Hong Kong, the

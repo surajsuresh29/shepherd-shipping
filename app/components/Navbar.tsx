@@ -66,7 +66,7 @@ export default function Navbar() {
               <li key={link.label}>
                 <a
                   href={link.href}
-                  className="nav-link text-white text-[13px] font-medium tracking-wide hover:text-secondary transition-colors"
+                  className="nav-link text-white text-[15px] font-medium tracking-wide hover:text-secondary transition-colors"
                 >
                   {link.label}
                 </a>
@@ -76,7 +76,7 @@ export default function Navbar() {
 
           <a
             href="#contact"
-            className="inline-flex items-center bg-secondary hover:bg-secondary-dark text-primary font-semibold text-[15px] px-7 py-2.5 rounded-full transition-all duration-300 relative z-[60]"
+            className="inline-flex items-center bg-secondary hover:bg-secondary-dark text-primary font-semibold text-[15px] px-7 py-2.5 rounded-full hover:scale-105 transition-all duration-300 relative z-[60]"
           >
             Get a quote
           </a>
@@ -101,7 +101,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-white text-sm font-medium block py-2 hover:text-secondary transition-colors"
+                  className="text-white text-base font-medium block py-2 hover:text-secondary transition-colors"
                 >
                   {link.label}
                 </a>

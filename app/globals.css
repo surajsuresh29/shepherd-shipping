@@ -34,6 +34,10 @@ a, button, [role="button"], .cursor-pointer {
   cursor: url('/cursor-plane-hover.svg') 4 5, pointer !important;
 }
 
+p, h1, h2, h3, h4, h5, h6, li, blockquote, input, textarea {
+  cursor: text;
+}
+
 /* Smooth fade-in animation */
 @keyframes fadeInUp {
   from {

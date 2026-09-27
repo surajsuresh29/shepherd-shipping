@@ -49,7 +49,7 @@ export default function Services() {
         {/* Section Header */}
         <div className="max-w-2xl mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight">
-            Complete freight solutions from Dubai to the world
+            Complete Freight Solutions from Dubai to the World
           </h2>
           <p className="mt-4 text-text-gray text-base leading-relaxed">
             Air, sea, customs clearance and 3PL warehousing, with transparent

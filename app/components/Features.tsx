@@ -3,19 +3,19 @@ import { UserCheck, MessageCircle, Globe } from "lucide-react";
 const features = [
   {
     icon: UserCheck,
-    title: "A dedicated account manager",
+    title: "A Dedicated Account Manager",
     description:
       "Reliable, personalised cargo services from an experienced team that ensures your goods arrive safely and on time.",
   },
   {
     icon: MessageCircle,
-    title: "Clear communication, start to finish",
+    title: "Clear Communication, Start to Finish",
     description:
       "We help businesses grow through smooth logistics, open communication, and a customer-centric approach.",
   },
   {
     icon: Globe,
-    title: "National to global reach",
+    title: "National to Global Reach",
     description:
       "National, regional and global reach give your business a competitive edge, with smooth coordination on every shipment.",
   },
@@ -28,7 +28,7 @@ export default function Features() {
         {/* Section Header */}
         <div className="text-center mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-primary">
-            Why businesses choose Shepherd
+            Why Businesses Choose Shepherd
           </h2>
         </div>
 

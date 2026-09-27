@@ -39,13 +39,13 @@ export default function Hero() {
             <div className="mt-8 flex flex-wrap gap-4 animate-fade-in-up delay-300">
               <a
                 href="#contact"
-                className="inline-flex items-center bg-white text-primary font-semibold text-sm px-7 py-3.5 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-xl"
+                className="inline-flex items-center bg-white text-primary font-semibold text-sm px-7 py-3.5 rounded-full hover:bg-secondary hover:text-white hover:scale-105 transition-all duration-300 shadow-xl"
               >
                 Get a freight quote
               </a>
               <a
                 href="#services"
-                className="inline-flex items-center border-2 border-white/80 bg-black/20 text-white font-semibold text-sm px-7 py-3.5 rounded-full hover:bg-white/30 hover:border-white transition-all duration-300 shadow-xl"
+                className="inline-flex items-center border-2 border-white/80 bg-black/20 text-white font-semibold text-sm px-7 py-3.5 rounded-full hover:bg-white/30 hover:border-white hover:scale-105 transition-all duration-300 shadow-xl"
               >
                 See our services
               </a>

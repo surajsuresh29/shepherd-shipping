@@ -97,12 +97,12 @@ function StatCell({
       {/* Number + label */}
       <div>
         <div
-          className="text-[#51B0B7] text-4xl lg:text-5xl font-bold tracking-tight leading-none"
+          className="cursor-text text-[#51B0B7] text-4xl lg:text-5xl font-bold tracking-tight leading-none"
           style={{ fontVariantNumeric: "tabular-nums" }}
         >
           {value}
         </div>
-        <div className="text-white/90 text-[13px] mt-1.5 font-medium leading-snug max-w-[200px]">
+        <div className="cursor-text text-white/90 text-[13px] mt-1.5 font-medium leading-snug max-w-[200px]">
           {stat.label}
         </div>
       </div>
