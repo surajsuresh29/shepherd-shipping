@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Shepherd International Logistics | Dubai Freight Forwarder Since 2004",
   description:
-    "Dubai-based freight forwarder since 2004. Air freight, sea freight, customs clearance and 3PL warehousing, handled by one reliable team. Offices in UAE, USA, Hong Kong and China.",
+    "Shepherd International Logistics is a leading Dubai freight forwarding company, offering complete freight solutions with trusted Dubai freight forwarders across the UAE and worldwide since 2004.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

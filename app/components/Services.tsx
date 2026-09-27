@@ -6,7 +6,7 @@ const services = [
     title: "Air & sea freight",
     description:
       "Reliable, personalised cargo services by air and sea. Your shipment arrives on time and in the correct condition, whether it is for business or personal needs.",
-    image: "/service-sea-freight.jpg",
+    image: "/service-sea-freight.png",
     gridClass: "md:col-span-2 md:row-span-1",
     subItems: [
       "Daily customs office engagement. Sun off",

@@ -1,16 +1,8 @@
-import { Clock, Building2, LayoutGrid, MapPin } from "lucide-react";
-
-const stats = [
-  { number: "21", label: "Years experience in transportation", icon: Clock },
-  { number: "2004", label: "Established in Dubai, U.A.E.", icon: Building2 },
-  { number: "4", label: "Core services: air, sea, customs, 3PL", icon: LayoutGrid },
-  { number: "7", label: "Branches and warehouses", icon: MapPin },
-];
+import StatsBar from "./StatsBar";
 
 export default function Hero() {
   return (
     <section id="home">
-      {/* Hero Area */}
       {/* Hero Area */}
       <div className="relative w-full min-h-[85vh] lg:min-h-[900px] flex flex-col justify-start overflow-hidden bg-transparent">
         {/* Seamless Navbar Transition Gradient */}
@@ -30,7 +22,6 @@ export default function Hero() {
             <source src="/hero,ship_compressed.mp4" type="video/mp4" />
           </video>
         </div>
-
 
         {/* Content (Aligned top-left) */}
         <div className="relative z-[4] max-w-7xl mx-auto px-6 pt-8 md:pt-12 lg:pt-16 pb-20 w-full">
@@ -60,29 +51,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Stats Bar */}
-      <div className="bg-primary border-t-[3px] border-[#51B0B7] bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.035)_0_2px,transparent_2px_26px)]">
-        <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row md:items-center divide-y divide-white/10 md:divide-y-0 md:divide-x md:divide-white/15">
-          {stats.map((stat, index) => (
-            <div
-              key={stat.number}
-              className={`flex items-center gap-4 py-6 first:pt-0 last:pb-0 md:py-0 md:px-8 md:first:pl-0 md:last:pr-0 flex-1 animate-count-up delay-${(index + 1) * 100}`}
-            >
-              <div className="flex-none w-14 h-14 rounded-2xl bg-[#51B0B7]/10 border border-[#51B0B7]/30 flex items-center justify-center">
-                <stat.icon className="w-6 h-6 text-[#51B0B7]" strokeWidth={1.8} />
-              </div>
-              <div>
-                <div className="text-[#51B0B7] text-4xl lg:text-5xl font-bold tracking-tight leading-none">
-                  {stat.number}
-                </div>
-                <div className="text-white/90 text-[13px] mt-1.5 font-medium leading-snug max-w-[200px]">
-                  {stat.label}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Animated Stats Bar */}
+      <StatsBar />
     </section>
   );
 }

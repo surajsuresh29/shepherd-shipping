@@ -16,7 +16,7 @@ export default function About() {
           <div className="relative animate-slide-in-left">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3]">
               <Image
-                src="/about-us.png"
+                src="/about-us.jpg"
                 alt="Shepherd logistics team at work"
                 fill
                 className="object-cover"
@@ -35,9 +35,12 @@ export default function About() {
           {/* Right Column - Content */}
           <div className="animate-slide-in-right">
             {/* Teal Tag */}
-            <span className="inline-block text-secondary text-sm font-semibold tracking-wider uppercase mb-3">
-              About Us
-            </span>
+            <div className="mb-3">
+              <span className="inline-block text-primary text-sm font-semibold tracking-wider uppercase">
+                About Us
+              </span>
+              <div className="w-8 h-0.5 bg-secondary rounded-full mt-1.5" />
+            </div>
 
             <h2 className="text-3xl md:text-4xl font-bold text-primary leading-tight mb-6">
               Shepherd International Logistics
