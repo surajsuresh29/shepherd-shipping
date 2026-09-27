@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -14,10 +14,29 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="bg-primary z-50">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-10 py-4">
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-transparent pt-4 px-4" : "bg-primary pt-0 px-0"
+      }`}
+    >
+      <nav
+        className={`mx-auto flex items-center justify-between px-6 lg:px-10 py-4 transition-all duration-300 ${
+          isScrolled
+            ? "max-w-7xl bg-primary/70 backdrop-blur-lg rounded-full shadow-2xl border border-white/10 w-full"
+            : "max-w-7xl bg-transparent rounded-none shadow-none border-transparent w-full"
+        }`}
+      >
         {/* Brand Lockup: Icon + Stacked Text */}
         <a href="#home" className="flex items-center gap-4 lg:gap-5 flex-shrink-0">
           <Image

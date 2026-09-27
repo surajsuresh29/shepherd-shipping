@@ -5,8 +5,11 @@ export default function Hero() {
     <section id="home">
       {/* Hero Area */}
       <div className="relative w-full min-h-[85vh] lg:min-h-[900px] flex flex-col justify-start overflow-hidden bg-transparent">
-        {/* Seamless Navbar Transition Gradient */}
-        <div className="absolute top-0 left-0 right-0 h-48 lg:h-64 bg-gradient-to-b from-primary to-transparent z-[1]" />
+        {/* Seamless Navbar Transition & Text Contrast Gradient */}
+        <div 
+          className="absolute inset-0 z-[1]" 
+          style={{ background: 'linear-gradient(to bottom, rgba(24, 55, 90, 1) 0%, rgba(24, 55, 90, 1) 100px, rgba(24, 55, 90, 0.7) 250px, rgba(24, 55, 90, 0) 600px)' }}
+        />
 
         {/* Background Video — autoplaying, looping, muted */}
         <div className="absolute inset-0 z-0">
@@ -16,15 +19,15 @@ export default function Hero() {
             muted
             playsInline
             poster="/hero-ship.png"
-            className="w-full h-full object-cover scale-110 translate-y-8"
-            style={{ objectPosition: 'center 85%' }}
+            className="w-full h-full object-cover scale-110 translate-y-24 md:translate-y-32"
+            style={{ objectPosition: 'center top' }}
           >
             <source src="/hero,ship_compressed.mp4" type="video/mp4" />
           </video>
         </div>
 
         {/* Content (Aligned top-left) */}
-        <div className="relative z-[4] max-w-7xl mx-auto px-6 pt-8 md:pt-12 lg:pt-16 pb-20 w-full">
+        <div className="relative z-[4] max-w-7xl mx-auto px-6 pt-28 md:pt-32 lg:pt-36 pb-20 w-full">
           <div className="max-w-4xl bg-black/10 backdrop-blur-[2px] p-4 lg:p-0 rounded-2xl lg:bg-transparent lg:backdrop-blur-none">
             <h1 className="text-5xl md:text-6xl lg:text-[76px] font-bold text-white leading-[1.05] tracking-tight animate-fade-in-up">
               DELIVERING PROMISES,<br className="hidden md:block" /> NOT JUST PACKAGES.

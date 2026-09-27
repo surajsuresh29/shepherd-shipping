@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CheckCircle } from "lucide-react";
+import ExperienceBadge from "./ExperienceBadge";
 
 const checkItems = [
   "Air, sea and customs clearance",
@@ -24,12 +25,7 @@ export default function About() {
               />
             </div>
             {/* Floating Badge */}
-            <div className="absolute -bottom-4 -left-2 md:bottom-6 md:left-6 bg-secondary text-white px-5 py-4 rounded-xl shadow-lg flex items-center gap-3">
-              <span className="text-3xl font-extrabold">21</span>
-              <span className="text-xs leading-tight font-medium max-w-[120px]">
-                Years experience in transportation
-              </span>
-            </div>
+            <ExperienceBadge />
           </div>
 
           {/* Right Column - Content */}

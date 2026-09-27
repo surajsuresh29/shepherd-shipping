@@ -11,7 +11,7 @@ const headOffice = {
   address: "D-07, Dafza, Dubai–UAE PO Box: 121743",
   phone: "+971 (4) 295 2885",
   email: "salesdwc@shepherdshipping.com",
-  hours: "Mon to Sat, 8:30am to 5:00 am",
+  hours: "Mon to Sat, 8:30am to 5:00 pm",
   offDay: "Sun off",
 };
 
