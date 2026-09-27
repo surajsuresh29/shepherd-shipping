@@ -21,7 +21,7 @@ export default function Footer() {
                 alt="Shepherd logo icon"
                 width={72}
                 height={72}
-                className="h-16 w-16 lg:h-[72px] lg:w-[72px] object-contain"
+                className="h-16 w-16 lg:h-[72px] lg:w-[72px] object-contain rounded-xl"
               />
               <div className="flex flex-col items-start justify-center">
                 <span className="text-white text-[28px] lg:text-[32px] font-normal tracking-wide font-serif leading-none">

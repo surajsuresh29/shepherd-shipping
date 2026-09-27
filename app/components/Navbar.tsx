@@ -10,6 +10,7 @@ const navLinks = [
   { label: "About Us", href: "#about" },
   { label: "Locations", href: "#locations" },
   { label: "Contact Us", href: "#contact" },
+  { label: "Blogs", href: "#blogs" },
 ];
 
 export default function Navbar() {
@@ -38,13 +39,13 @@ export default function Navbar() {
         }`}
       >
         {/* Brand Lockup: Icon + Stacked Text */}
-        <a href="#home" className="flex items-center gap-4 lg:gap-5 flex-shrink-0">
+        <a href="/" className="flex items-center gap-4 lg:gap-5 flex-shrink-0">
           <Image
             src="/shepherd-icon.png"
             alt="Shepherd logo icon"
             width={72}
             height={72}
-            className="h-16 w-16 lg:h-[72px] lg:w-[72px] object-contain"
+            className="h-16 w-16 lg:h-[72px] lg:w-[72px] object-contain rounded-xl"
             priority
           />
           <div className="flex flex-col items-start justify-center">
