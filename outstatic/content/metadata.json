@@ -1,6 +1,6 @@
 {
-  "commit": "a1c9a6ca881ca5d811ef835458232a8456de0fd3",
-  "generated": "2026-10-10T20:55:05.841Z",
+  "commit": "f394754f4a79960e93cb4cc22ffdbb1567a4ba95",
+  "generated": "2026-10-10T21:00:08.838Z",
   "metadata": [
     {
       "__outstatic": {
@@ -20,8 +20,8 @@
     },
     {
       "__outstatic": {
-        "commit": "a1c9a6ca881ca5d811ef835458232a8456de0fd3",
-        "hash": "2746007302",
+        "commit": "f394754f4a79960e93cb4cc22ffdbb1567a4ba95",
+        "hash": "3122269705",
         "path": "outstatic/content/posts/test-blog-2.md"
       },
       "author": {

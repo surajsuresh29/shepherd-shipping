@@ -8,4 +8,5 @@ author:
 slug: test-blog-2
 ---
 
-This is the second test blog
+This is the second test blog\
+![](/media/images/shepherd-icon-M1MT.png)
