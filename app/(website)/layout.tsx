@@ -19,10 +19,17 @@ export const metadata: Metadata = {
     "Shepherd International Logistics is a leading Dubai freight forwarding company, offering complete freight solutions with trusted Dubai freight forwarders across the UAE and worldwide since 2004.",
 };
 
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} antialiased scroll-pt-32`}>
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${playfair.variable} antialiased scroll-pt-32`}>
+      <body className="min-h-full flex flex-col font-sans">
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
