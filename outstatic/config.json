@@ -1,3 +1,16 @@
 {
-  "mdExtension": "md"
+  "mdExtension": "md",
+  "media": [
+    {
+      "categories": [
+        "image"
+      ],
+      "input": "outstatic/content",
+      "label": "images",
+      "name": "images",
+      "output": "/media/images"
+    }
+  ],
+  "publicMediaPath": "media/images/",
+  "repoMediaPath": "outstatic/content/"
 }
