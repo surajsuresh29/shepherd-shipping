@@ -1,0 +1,22 @@
+{
+  "commit": "37920bf71e82781169d6d62e0371b4be92ef9ed7",
+  "generated": "2026-10-10T20:24:17.738Z",
+  "metadata": [
+    {
+      "__outstatic": {
+        "commit": "37920bf71e82781169d6d62e0371b4be92ef9ed7",
+        "hash": "3700538435",
+        "path": "outstatic/content/posts/test-article.mdx"
+      },
+      "author": {
+        "name": "Suraj Suresh",
+        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
+      },
+      "collection": "posts",
+      "publishedAt": "2026-10-10T20:23:12.551Z",
+      "slug": "test-article",
+      "status": "published",
+      "title": "Test Article"
+    }
+  ]
+}
