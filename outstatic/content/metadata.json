@@ -1,6 +1,6 @@
 {
-  "commit": "0e4f095295a9bcd56570c4aa1b986326b0fc6ca6",
-  "generated": "2026-10-10T20:41:57.281Z",
+  "commit": "a1c9a6ca881ca5d811ef835458232a8456de0fd3",
+  "generated": "2026-10-10T20:55:05.841Z",
   "metadata": [
     {
       "__outstatic": {
@@ -17,6 +17,22 @@
       "slug": "test-article",
       "status": "published",
       "title": "Test Article"
+    },
+    {
+      "__outstatic": {
+        "commit": "a1c9a6ca881ca5d811ef835458232a8456de0fd3",
+        "hash": "2746007302",
+        "path": "outstatic/content/posts/test-blog-2.md"
+      },
+      "author": {
+        "name": "Suraj Suresh",
+        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
+      },
+      "collection": "posts",
+      "publishedAt": "2026-10-10T20:54:36.703Z",
+      "slug": "test-blog-2",
+      "status": "published",
+      "title": "Test blog 2"
     }
   ]
 }
