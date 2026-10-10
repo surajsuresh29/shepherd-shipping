@@ -1,6 +1,18 @@
 {
-  "commit": "",
-  "generated": "2026-10-10T20:57:30.526Z",
+  "commit": "41540e9f068dddff30a9bdc7cf9a2381b56c1fb3",
+  "generated": "2026-10-10T20:58:15.593Z",
   "media": [
+    {
+      "__outstatic": {
+        "commit": "41540e9f068dddff30a9bdc7cf9a2381b56c1fb3",
+        "hash": "641844037",
+        "path": "outstatic/content/shepherd-icon-M1MT.png"
+      },
+      "alt": "",
+      "filename": "shepherd-icon-M1MT.png",
+      "publishedAt": "2026-10-10T20:58:15.593Z",
+      "source": "images",
+      "type": "image"
+    }
   ]
 }
