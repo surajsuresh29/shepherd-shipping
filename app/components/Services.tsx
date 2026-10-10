@@ -61,19 +61,20 @@ export default function Services() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Air & Sea Freight - Spans 2 columns */}
           <div className="md:col-span-2 md:row-span-1 group">
-            <div className="service-card bg-primary rounded-xl overflow-hidden h-full">
-              <div className="relative h-64 md:h-72 overflow-hidden">
+            <div className="service-card bg-primary group-hover:bg-secondary transition-colors duration-500 rounded-xl overflow-hidden h-full flex flex-col">
+              <div className="relative flex-1 min-h-[240px] md:min-h-[280px] overflow-hidden">
                 <Image
                   src={services[0].image}
                   alt={services[0].title}
                   fill
+                  priority
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 768px) 100vw, 66vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-3">
+              <div className="p-4 sm:px-5 sm:py-4 flex-none">
+                <h3 className="text-xl font-bold text-white mb-1">
                   {services[0].title}
                 </h3>
                 <p className="text-white/80 text-sm leading-relaxed">
@@ -85,7 +86,7 @@ export default function Services() {
 
           {/* 3PL Warehousing - Spans 2 rows vertically */}
           <div className="md:col-span-1 md:row-span-2 group">
-            <div className="service-card bg-primary rounded-xl overflow-hidden h-full flex flex-col">
+            <div className="service-card bg-primary group-hover:bg-secondary transition-colors duration-500 rounded-xl overflow-hidden h-full flex flex-col">
               <div className="relative flex-1 min-h-[300px] overflow-hidden">
                 <Image
                   src={services[3].image}
@@ -94,10 +95,10 @@ export default function Services() {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-3">
+              <div className="p-4 sm:px-5 sm:py-4 flex-none">
+                <h3 className="text-xl font-bold text-white mb-1">
                   {services[3].title}
                 </h3>
                 <p className="text-white/80 text-sm leading-relaxed">
@@ -109,8 +110,8 @@ export default function Services() {
 
           {/* Customs Clearance */}
           <div className="md:col-span-1 md:row-span-1 group">
-            <div className="service-card bg-primary rounded-xl overflow-hidden h-full">
-              <div className="relative h-48 overflow-hidden">
+            <div className="service-card bg-primary group-hover:bg-secondary transition-colors duration-500 rounded-xl overflow-hidden h-full flex flex-col">
+              <div className="relative flex-1 min-h-[200px] overflow-hidden">
                 <Image
                   src={services[1].image}
                   alt={services[1].title}
@@ -118,10 +119,10 @@ export default function Services() {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-white mb-2">
+              <div className="p-4 sm:px-5 sm:py-4 flex-none">
+                <h3 className="text-lg font-bold text-white mb-1">
                   {services[1].title}
                 </h3>
                 <p className="text-white/80 text-sm leading-relaxed">
@@ -133,8 +134,8 @@ export default function Services() {
 
           {/* Customised Solutions */}
           <div className="md:col-span-1 md:row-span-1 group">
-            <div className="service-card bg-primary rounded-xl overflow-hidden h-full">
-              <div className="relative h-48 overflow-hidden">
+            <div className="service-card bg-primary group-hover:bg-secondary transition-colors duration-500 rounded-xl overflow-hidden h-full flex flex-col">
+              <div className="relative flex-1 min-h-[200px] overflow-hidden">
                 <Image
                   src={services[2].image}
                   alt={services[2].title}
@@ -142,10 +143,10 @@ export default function Services() {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-white mb-2">
+              <div className="p-4 sm:px-5 sm:py-4 flex-none">
+                <h3 className="text-lg font-bold text-white mb-1">
                   {services[2].title}
                 </h3>
                 <p className="text-white/80 text-sm leading-relaxed">

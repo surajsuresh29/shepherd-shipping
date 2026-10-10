@@ -20,6 +20,7 @@ export default function About() {
                 src="/about-us.jpg"
                 alt="Shepherd logistics team at work"
                 fill
+                priority
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
@@ -64,7 +65,7 @@ export default function About() {
             {/* CTA Button */}
             <a
               href="#contact"
-              className="inline-flex items-center bg-primary hover:bg-primary-dark text-white font-semibold text-sm px-8 py-3.5 rounded-md transition-all duration-300 shadow-md hover:shadow-lg"
+              className="inline-flex items-center bg-primary hover:bg-secondary text-white font-semibold text-sm px-8 py-3.5 rounded-md hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
             >
               Contact us
             </a>
