@@ -1,7 +1,18 @@
-import { getDocumentBySlug } from 'outstatic/server'
+import { getDocumentBySlug, getDocuments } from 'outstatic/server'
 import { notFound } from 'next/navigation'
 import Markdown from 'react-markdown'
 import Link from 'next/link'
+
+export async function generateStaticParams() {
+  try {
+    const posts = getDocuments('posts', ['slug'])
+    return posts.map((post) => ({
+      slug: post.slug,
+    }))
+  } catch (e) {
+    return []
+  }
+}
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
