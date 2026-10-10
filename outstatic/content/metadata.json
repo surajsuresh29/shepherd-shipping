@@ -1,0 +1,22 @@
+{
+  "commit": "",
+  "generated": "2026-10-10T20:24:12.537Z",
+  "metadata": [
+    {
+      "__outstatic": {
+        "commit": "",
+        "hash": "2773212513",
+        "path": "outstatic/content/posts/test-article.mdx"
+      },
+      "author": {
+        "name": "Suraj Suresh",
+        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
+      },
+      "collection": "posts",
+      "publishedAt": "2026-10-10T20:23:12.551Z",
+      "slug": "test-article",
+      "status": "draft",
+      "title": "Test Article"
+    }
+  ]
+}
