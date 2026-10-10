@@ -1,11 +1,11 @@
 {
-  "commit": "ea0e9a57e20cb7b61e6750683fb5447c8aeba237",
-  "generated": "2026-10-10T20:41:48.598Z",
+  "commit": "0e4f095295a9bcd56570c4aa1b986326b0fc6ca6",
+  "generated": "2026-10-10T20:41:57.281Z",
   "metadata": [
     {
       "__outstatic": {
-        "commit": "ea0e9a57e20cb7b61e6750683fb5447c8aeba237",
-        "hash": "2773212513",
+        "commit": "0e4f095295a9bcd56570c4aa1b986326b0fc6ca6",
+        "hash": "3700538435",
         "path": "outstatic/content/posts/test-article.mdx"
       },
       "author": {
@@ -15,7 +15,7 @@
       "collection": "posts",
       "publishedAt": "2026-10-10T20:23:12.551Z",
       "slug": "test-article",
-      "status": "draft",
+      "status": "published",
       "title": "Test Article"
     }
   ]
