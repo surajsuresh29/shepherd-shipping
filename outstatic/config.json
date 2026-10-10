@@ -5,12 +5,12 @@
       "categories": [
         "image"
       ],
-      "input": "outstatic/content",
+      "input": "public/media/images",
       "label": "images",
       "name": "images",
       "output": "/media/images"
     }
   ],
-  "publicMediaPath": "media/images/",
-  "repoMediaPath": "outstatic/content/"
+  "publicMediaPath": "/media/images/",
+  "repoMediaPath": "public/media/images/"
 }
