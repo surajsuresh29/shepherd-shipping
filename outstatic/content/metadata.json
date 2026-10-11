@@ -1,6 +1,6 @@
 {
-  "commit": "8b942fa4750c706031f0097d024f0c768506278e",
-  "generated": "2026-10-11T10:58:13.787Z",
+  "commit": "11ae7bcd9c2fe3b43d030e3a6685d3132d56aff6",
+  "generated": "2026-10-11T10:59:21.692Z",
   "metadata": [
     {
       "__outstatic": {
@@ -53,8 +53,8 @@
     },
     {
       "__outstatic": {
-        "commit": "8b942fa4750c706031f0097d024f0c768506278e",
-        "hash": "528445047",
+        "commit": "11ae7bcd9c2fe3b43d030e3a6685d3132d56aff6",
+        "hash": "1630248197",
         "path": "outstatic/content/posts/test-cover-image.md"
       },
       "author": {
@@ -69,7 +69,7 @@
       "readTime": "2 min read",
       "slug": "test-cover-image",
       "status": "published",
-      "title": ""
+      "title": "test cover image"
     }
   ]
 }
