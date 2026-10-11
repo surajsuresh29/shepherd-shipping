@@ -1,6 +1,6 @@
 export default function Industries() {
   return (
-    <section className="shepherd-stripes-bg text-white py-8 sm:py-10 md:py-12 px-6 sm:px-8 border-b border-white/10 relative overflow-hidden">
+    <section id="industries" className="shepherd-stripes-bg text-white py-8 sm:py-10 md:py-12 px-6 sm:px-8 border-b border-white/10 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="mb-4 sm:mb-6 max-w-2xl">

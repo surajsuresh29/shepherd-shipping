@@ -6,7 +6,9 @@ const quickLinks = [
   { label: "Home", href: "/#home" },
   { label: "About Us", href: "/about" },
   { label: "Services", href: "/#services" },
+  { label: "Industries", href: "/#industries" },
   { label: "Blogs", href: "/blog" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 const socialLinks = [
@@ -51,7 +53,7 @@ const socialLinks = [
     href: "https://www.threads.com/@shepherdinternationallogistics",
     icon: (
       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12.186 24C5.466 24 0 18.534 0 11.814 0 5.094 5.466 0 12.186 0c6.72 0 12.186 5.094 12.186 11.814 0 .616-.046 1.23-.137 1.836a1.2 1.2 0 0 1-2.38-.36 9.873 9.873 0 0 0 .117-1.476C21.972 6.42 17.58 2.4 12.186 2.4c-5.394 0-9.786 4.02-9.786 9.414 0 5.394 4.392 9.414 9.786 9.414 2.68 0 5.163-.996 6.993-2.805a1.2 1.2 0 0 1 1.696 1.696C18.636 22.374 15.54 24 12.186 24zm4.186-13.88c0-3.37-2.45-5.52-5.786-5.52-3.337 0-5.787 2.15-5.787 5.52 0 3.37 2.45 5.52 5.787 5.52 1.835 0 3.37-.665 4.385-1.895a1.2 1.2 0 0 1 1.874 1.498c-1.5 1.82-3.71 2.797-6.26 2.797-4.66 0-8.186-3.15-8.186-7.92 0-4.77 3.526-7.92 8.186-7.92 4.66 0 8.186 3.15 8.186 7.92 0 .584-.047 1.16-.14 1.725-.66 3.99-3.84 5.92-7.3 5.92-2.11 0-3.92-.88-4.94-2.43a1.2 1.2 0 0 1 2.02-1.3c.6 1 1.7 1.33 2.92 1.33 2.1 0 4.19-1.22 4.68-3.98.05-.28.08-.57.08-.85zm-5.786 3.12c-2.02 0-3.386-1.36-3.386-3.12 0-1.76 1.366-3.12 3.386-3.12 2.02 0 3.386 1.36 3.386 3.12 0 1.76-1.366 3.12-3.386 3.12z" />
+        <path d="M18.263 11.097c-.03-3.486-1.92-5.586-5.111-5.586-2.13 0-3.922.963-4.863 2.499l2.062 1.438c.535-.843 1.272-1.543 2.628-1.543 1.528 0 2.318.85 2.544 2.431a15 15 0 0 0-2.236-.173c-4.125 0-6.068 1.867-6.068 4.336s1.943 3.99 4.804 3.99c3.139 0 5.013-2.115 5.781-4.735.798.361 1.348 1.204 1.348 2.47 0 3.387-3.907 5.232-7.22 5.232-4.885 0-8.077-3.207-8.077-8.424 0-6.392 4.223-10.487 9.9-10.487 3.808 0 5.69 1.671 6.97 3.914l2.108-1.475C21.44 2.078 18.331 0 13.663 0 6.227 0 1.168 5.277 1.168 12.934c0 7 4.953 11.066 10.856 11.066 4.878 0 9.809-2.846 9.809-7.716 0-2.545-1.46-4.231-3.569-5.187m-6.33 4.855c-1.077 0-2.026-.512-2.026-1.453 0-1.483 1.822-1.934 3.606-1.934.678 0 1.34.045 1.927.173-.422 1.927-1.671 3.215-3.508 3.214Z" />
       </svg>
     ),
   },
@@ -62,7 +64,7 @@ export default function Footer() {
     <footer className="bg-primary-deeper text-white">
       <div className="max-w-7xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Column 1 - Logo, Description & Socials */}
+          {/* Column 1 - Logo & Description */}
           <div>
             <div className="flex items-center gap-3 mb-5">
               <Image
@@ -82,37 +84,9 @@ export default function Footer() {
                 </span>
               </div>
             </div>
-            <p className="text-white/60 text-sm leading-relaxed mb-3">
+            <p className="text-white/60 text-sm leading-relaxed">
               Shepherd International Logistics. Your shipping partner since 2004.
             </p>
-            <a
-              href="https://shepherdshipping.com"
-              className="text-secondary text-sm hover:underline block mb-5"
-            >
-              shepherdshipping.com
-            </a>
-
-            {/* Social Media Handles */}
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-wider text-white/50 block mb-2.5">
-                Connect With Us
-              </span>
-              <div className="flex items-center gap-2">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.name}
-                    title={social.name}
-                    className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 hover:border-secondary hover:bg-secondary hover:text-primary text-white/70 flex items-center justify-center transition-all duration-300 hover:scale-105"
-                  >
-                    {social.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Column 2 - Head Office */}
@@ -190,7 +164,7 @@ export default function Footer() {
             © 2026 Shepherd International logistics. All rights reserved
           </p>
 
-          {/* Secondary social link row in bottom bar */}
+          {/* Social links row in bottom bar only */}
           <div className="flex items-center gap-3">
             {socialLinks.map((social) => (
               <a
