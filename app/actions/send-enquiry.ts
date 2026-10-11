@@ -15,6 +15,17 @@ export interface EnquiryState {
     turnstile?: string[];
     _form?: string[];
   };
+  submittedValues?: {
+    name?: string;
+    email?: string;
+    message?: string;
+    phone?: string;
+    company?: string;
+    serviceType?: string;
+    expectedDate?: string;
+    origin?: string;
+    destination?: string;
+  };
   timestamp?: number;
 }
 
@@ -34,7 +45,25 @@ const enquirySchema = z.object({
     .min(5, "Please provide shipment details or a message (at least 5 characters)")
     .max(2000, "Message must not exceed 2000 characters"),
   company: z.string().trim().max(100).optional(),
-  phone: z.string().trim().max(50).optional(),
+  phone: z
+    .string()
+    .trim()
+    .optional()
+    .refine(
+      (val) => {
+        if (!val || val.length === 0) return true; // Optional field
+        // Must only contain digits, +, spaces, hyphens, or parentheses
+        const allowedChars = /^[0-9+\s\-()]{7,25}$/;
+        if (!allowedChars.test(val)) return false;
+        // Pure digit count should be between 7 and 15 (E.164 standard)
+        const digits = val.replace(/\D/g, "");
+        return digits.length >= 7 && digits.length <= 15;
+      },
+      {
+        message:
+          "Please enter a valid phone number (e.g. +971 50 123 4567 or +1-877-841-1954)",
+      }
+    ),
   serviceType: z.string().trim().optional(),
   expectedDate: z.string().trim().optional(),
   origin: z.string().trim().optional(),
@@ -88,6 +117,17 @@ export async function sendEnquiry(
         phone: fieldErrors.phone,
         company: fieldErrors.company,
         turnstile: fieldErrors.turnstileToken,
+      },
+      submittedValues: {
+        name: rawData.name,
+        email: rawData.email,
+        message: rawData.message,
+        phone: rawData.phone,
+        company: rawData.company,
+        serviceType: rawData.serviceType,
+        expectedDate: rawData.expectedDate,
+        origin: rawData.origin,
+        destination: rawData.destination,
       },
       timestamp: Date.now(),
     };

@@ -118,8 +118,60 @@ export default function ContactClient() {
 
   const turnstileRef = useRef<TurnstileInstance>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const confirmationRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
-  const [isResetting, setIsResetting] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
+  const [formKey, setFormKey] = useState(0);
+
+  // Controlled form state so values are retained during validation errors
+  const [formData, setFormData] = useState({
+    fullName: "",
+    company: "",
+    email: "",
+    phone: "",
+    shipmentType: "Air Freight",
+    expectedDate: "",
+    origin: "",
+    destination: "",
+    details: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Sync with submittedValues returned from server action if available
+  useEffect(() => {
+    if (state.submittedValues && !state.success) {
+      setFormData((prev) => ({
+        fullName: state.submittedValues?.name ?? prev.fullName,
+        company: state.submittedValues?.company ?? prev.company,
+        email: state.submittedValues?.email ?? prev.email,
+        phone: state.submittedValues?.phone ?? prev.phone,
+        shipmentType: state.submittedValues?.serviceType ?? prev.shipmentType,
+        expectedDate: state.submittedValues?.expectedDate ?? prev.expectedDate,
+        origin: state.submittedValues?.origin ?? prev.origin,
+        destination: state.submittedValues?.destination ?? prev.destination,
+        details: state.submittedValues?.message ?? prev.details,
+      }));
+    }
+  }, [state.timestamp, state.success, state.submittedValues]);
+
+  // Sync dismiss status when a new submission occurs
+  useEffect(() => {
+    if (state.success) {
+      setIsDismissed(false);
+    }
+  }, [state.timestamp, state.success]);
 
   // Reset turnstile when an error occurs so the user can complete the challenge again
   useEffect(() => {
@@ -129,14 +181,47 @@ export default function ContactClient() {
     }
   }, [state.timestamp, state.success]);
 
+  // When form is submitted successfully, scroll directly to the confirmation card
+  useEffect(() => {
+    if (state.success && !isDismissed) {
+      // Clear any #offices anchor from URL so the browser doesn't pull the screen down
+      if (typeof window !== "undefined" && window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+
+      const timer = setTimeout(() => {
+        confirmationRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 60);
+      return () => clearTimeout(timer);
+    }
+  }, [state.success, isDismissed]);
+
   const handleResetForm = () => {
-    setIsResetting(true);
+    setIsDismissed(true);
+    setFormKey((prev) => prev + 1);
+    setFormData({
+      fullName: "",
+      company: "",
+      email: "",
+      phone: "",
+      shipmentType: "Air Freight",
+      expectedDate: "",
+      origin: "",
+      destination: "",
+      details: "",
+    });
     setTurnstileToken("");
     turnstileRef.current?.reset();
     formRef.current?.reset();
     setTimeout(() => {
-      setIsResetting(false);
-    }, 100);
+      sectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 50);
   };
 
   return (
@@ -235,7 +320,11 @@ export default function ContactClient() {
       {/* =========================================================================
           2. FORM SECTION (Light background #F6F8FB, max-width ~760px, underlined fields)
          ========================================================================= */}
-      <section className="bg-[#F6F8FB] text-[#1E293B] py-20 px-6 sm:px-8 border-b border-[#E2E8F0]">
+      <section
+        ref={sectionRef}
+        id="enquiry"
+        className="bg-[#F6F8FB] text-[#1E293B] py-20 px-6 sm:px-8 border-b border-[#E2E8F0] min-h-[550px] scroll-mt-24 transition-all"
+      >
         <div className="max-w-[760px] mx-auto">
           {/* Section Header */}
           <div className="mb-10">
@@ -257,30 +346,35 @@ export default function ContactClient() {
           </div>
 
           {/* Form / Success Feedback */}
-          {state.success && !isResetting ? (
-            <div className="bg-white border-l-4 border-[#51B0B7] p-8 text-left shadow-sm rounded-xs">
-              <div className="flex items-start gap-3.5">
-                <CheckCircle2 className="w-6 h-6 text-[#51B0B7] flex-shrink-0 mt-0.5" />
+          {state.success && !isDismissed ? (
+            <div
+              ref={confirmationRef}
+              className="bg-white border-l-4 border-[#51B0B7] p-8 sm:p-10 text-left shadow-sm rounded-xs scroll-mt-32 my-4"
+            >
+              <div className="flex items-start gap-4">
+                <CheckCircle2 className="w-7 h-7 text-[#51B0B7] flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-lg font-bold text-[#0F2C4E] mb-2">
+                  <h3 className="text-xl font-bold text-[#0F2C4E] mb-2">
                     Enquiry received
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
                     {state.message ||
                       "Thank you! Our freight operations team will review your cargo lane and reply with pricing and transit schedules within one business day."}
                   </p>
                   <button
                     type="button"
                     onClick={handleResetForm}
-                    className="text-xs font-semibold text-[#184478] hover:text-[#51B0B7] transition-colors underline cursor-pointer"
+                    className="inline-flex items-center gap-2 bg-[#184478] hover:bg-[#51B0B7] text-white px-5 py-2.5 rounded-full text-xs font-semibold transition-colors cursor-pointer"
                   >
-                    Send another enquiry
+                    <span>Send another enquiry</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
             </div>
           ) : (
             <form
+              key={formKey}
               ref={formRef}
               action={formAction}
               className="text-left"
@@ -320,6 +414,8 @@ export default function ContactClient() {
                     id="fullName"
                     name="fullName"
                     required
+                    value={formData.fullName}
+                    onChange={handleChange}
                     placeholder="Your name"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -342,6 +438,8 @@ export default function ContactClient() {
                     type="text"
                     id="company"
                     name="company"
+                    value={formData.company}
+                    onChange={handleChange}
                     placeholder="Company name"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -365,6 +463,8 @@ export default function ContactClient() {
                     id="email"
                     name="email"
                     required
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="you@company.com"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -387,6 +487,8 @@ export default function ContactClient() {
                     type="tel"
                     id="phone"
                     name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     placeholder="+971..."
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -408,7 +510,8 @@ export default function ContactClient() {
                   <select
                     id="shipmentType"
                     name="shipmentType"
-                    defaultValue="Air Freight"
+                    value={formData.shipmentType}
+                    onChange={handleChange}
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors cursor-pointer"
                   >
                     <option value="Air Freight">Air Freight</option>
@@ -436,6 +539,8 @@ export default function ContactClient() {
                     type="text"
                     id="expectedDate"
                     name="expectedDate"
+                    value={formData.expectedDate}
+                    onChange={handleChange}
                     placeholder="e.g. Mid-November"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -453,6 +558,8 @@ export default function ContactClient() {
                     type="text"
                     id="origin"
                     name="origin"
+                    value={formData.origin}
+                    onChange={handleChange}
                     placeholder="City, country"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -470,6 +577,8 @@ export default function ContactClient() {
                     type="text"
                     id="destination"
                     name="destination"
+                    value={formData.destination}
+                    onChange={handleChange}
                     placeholder="City, country"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -488,6 +597,8 @@ export default function ContactClient() {
                     name="details"
                     rows={3}
                     required
+                    value={formData.details}
+                    onChange={handleChange}
                     placeholder="Cargo type, approximate weight/volume, any special handling requirements..."
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors resize-y"
                   />
