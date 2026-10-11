@@ -1,23 +1,7 @@
 {
-  "commit": "8bcf8e88de8f22f5cdffc15ce377f10e4841a446",
-  "generated": "2026-10-11T08:16:30.260Z",
+  "commit": "5036bc8fa1808ccc314e1c9ecb19af29a427432e",
+  "generated": "2026-10-11T10:43:46.833Z",
   "metadata": [
-    {
-      "__outstatic": {
-        "commit": "0e4f095295a9bcd56570c4aa1b986326b0fc6ca6",
-        "hash": "3700538435",
-        "path": "outstatic/content/posts/test-article.mdx"
-      },
-      "author": {
-        "name": "Suraj Suresh",
-        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
-      },
-      "collection": "posts",
-      "publishedAt": "2026-10-10T20:23:12.551Z",
-      "slug": "test-article",
-      "status": "published",
-      "title": "Test Article"
-    },
     {
       "__outstatic": {
         "commit": "f394754f4a79960e93cb4cc22ffdbb1567a4ba95",
@@ -49,6 +33,23 @@
       "slug": "test-post-3",
       "status": "published",
       "title": "Test Post 3"
+    },
+    {
+      "__outstatic": {
+        "commit": "5036bc8fa1808ccc314e1c9ecb19af29a427432e",
+        "hash": "1855772075",
+        "path": "outstatic/content/posts/test-article.mdx"
+      },
+      "author": {
+        "name": "Suraj Suresh",
+        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
+      },
+      "collection": "posts",
+      "featured": true,
+      "publishedAt": "2026-10-10T20:23:12.551Z",
+      "slug": "test-article",
+      "status": "published",
+      "title": "Test Article"
     }
   ]
 }
