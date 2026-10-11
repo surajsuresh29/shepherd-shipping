@@ -141,18 +141,32 @@ export default function Footer() {
             <h4 className="text-sm font-bold uppercase tracking-wider mb-5">
               Quick links
             </h4>
-            <ul className="flex flex-col gap-2.5">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-white/60 text-sm hover:text-secondary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="grid grid-cols-2 gap-x-4">
+              <ul className="flex flex-col gap-2.5">
+                {quickLinks.slice(0, 3).map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-white/60 text-sm hover:text-secondary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <ul className="flex flex-col gap-2.5">
+                {quickLinks.slice(3).map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-white/60 text-sm hover:text-secondary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
