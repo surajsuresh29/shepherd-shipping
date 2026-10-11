@@ -1,63 +1,57 @@
-import { UserCheck, MessageCircle, Globe } from "lucide-react";
-
-const features = [
+const reasons = [
   {
-    icon: UserCheck,
-    title: "A Dedicated Account Manager",
+    numeral: "01",
+    title: "One person who knows your account",
     description:
-      "Reliable, personalised cargo services from an experienced team that ensures your goods arrive safely and on time.",
+      "You deal with one account manager who knows your cargo, routes and deadlines. Call or message them directly.",
   },
   {
-    icon: MessageCircle,
-    title: "Clear Communication, Start to Finish",
+    numeral: "02",
+    title: "An update at every handover",
     description:
-      "We help businesses grow through smooth logistics, open communication, and a customer-centric approach.",
+      "You hear from us at pickup, customs clearance, departure and delivery, not only when something goes wrong.",
   },
   {
-    icon: Globe,
-    title: "National to Global Reach",
+    numeral: "03",
+    title: "UAE to international destinations",
     description:
-      "National, regional and global reach give your business a competitive edge, with smooth coordination on every shipment.",
+      "Deliveries across the UAE, plus regular lanes to the US, China, Hong Kong and India.",
   },
 ];
 
 export default function Features() {
   return (
-    <section className="py-20 bg-bg-gray">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary">
-            Why Businesses Choose Shepherd
-          </h2>
-        </div>
+    <section className="py-16 md:py-20 bg-white border-b border-[#d9dee5]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Heading */}
+        <h2 className="text-2xl md:text-3xl font-bold text-primary tracking-tight mb-12 text-left">
+          Why businesses choose Shepherd
+        </h2>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <div
-                key={feature.title}
-                className={`feature-card flex flex-col bg-white rounded-xl p-8 shadow-sm border border-border-light animate-fade-in-up delay-${(index + 1) * 100}`}
-              >
-                <div className="flex items-center justify-between mb-6">
-                  {/* Icon badge */}
-                  <div className="w-14 h-14 rounded-2xl bg-[#51B0B7]/10 border border-[#51B0B7]/30 flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-[#51B0B7]" strokeWidth={1.8} />
-                  </div>
-                </div>
-                {/* Teal accent line */}
-                <div className="w-12 h-1 bg-secondary rounded-full mb-6" />
-                <h3 className="text-lg font-bold text-primary mb-4 leading-snug">
-                  {feature.title}
-                </h3>
-                <p className="text-[#5A6B87] text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            );
-          })}
+        {/* Three Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {reasons.map((item, index) => (
+            <div
+              key={item.numeral}
+              className={`flex flex-col text-left ${
+                index === 0
+                  ? "pb-8 md:pb-0 md:pl-0 md:pr-8"
+                  : index === 1
+                  ? "pt-8 pb-8 border-t border-[#d9dee5] md:pt-0 md:pb-0 md:border-t-0 md:border-l md:border-[#d9dee5] md:px-8"
+                  : "pt-8 border-t border-[#d9dee5] md:pt-0 md:border-t-0 md:border-l md:border-[#d9dee5] md:px-8"
+              }`}
+            >
+              <span className="text-[40px] leading-none font-semibold text-secondary mb-4">
+                {item.numeral}
+              </span>
+              <h3 className="text-xl font-bold text-primary mb-3 leading-snug">
+                {item.title}
+              </h3>
+              <p className="text-[#5A6B87] text-sm md:text-[15px] leading-[1.6]">
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
