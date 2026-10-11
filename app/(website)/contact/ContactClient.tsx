@@ -489,7 +489,7 @@ export default function ContactClient() {
       {/* =========================================================================
           3. OUR OFFICES SECTION (Full width dark gradient band, manifest-style sheet)
          ========================================================================= */}
-      <section className="shepherd-stripes-bg text-white py-20 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+      <section id="offices" className="shepherd-stripes-bg text-white py-20 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-10 sm:mb-12 max-w-2xl text-left">

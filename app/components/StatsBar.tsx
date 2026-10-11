@@ -18,7 +18,7 @@ const stats: Stat[] = [
   { target: 21, label: "Years experience in transportation", icon: Clock },
   { target: 2004, label: "Established in Dubai, U.A.E.", icon: Building2 },
   { target: 4, label: "Core services: air, sea, customs, 3PL", icon: LayoutGrid },
-  { target: 7, label: "Branches and warehouses", icon: MapPin },
+  { target: 8, label: "Offices across UAE, HK & US", icon: MapPin },
 ];
 
 /* ------------------------------------------------------------------ */
