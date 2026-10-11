@@ -1,7 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { Phone, Mail, Clock, ArrowRight, CheckCircle2 } from "lucide-react";
+import { useActionState, useState, useRef, useEffect } from "react";
+import {
+  Phone,
+  Mail,
+  Clock,
+  ArrowRight,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  ShieldCheck,
+} from "lucide-react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { sendEnquiry, type EnquiryState } from "@/app/actions/send-enquiry";
 
 interface OfficeLocation {
   name: string;
@@ -95,35 +106,37 @@ const officesData: OfficeLocation[] = [
   },
 ];
 
+const initialActionState: EnquiryState = {
+  success: false,
+};
+
 export default function ContactClient() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    company: "",
-    email: "",
-    phone: "",
-    shipmentType: "Air Freight",
-    expectedDate: "",
-    origin: "",
-    destination: "",
-    details: "",
-  });
+  const [state, formAction, isPending] = useActionState(
+    sendEnquiry,
+    initialActionState
+  );
 
-  const [submitted, setSubmitted] = useState(false);
+  const turnstileRef = useRef<TurnstileInstance>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const [isResetting, setIsResetting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
+  // Reset turnstile when an error occurs so the user can complete the challenge again
+  useEffect(() => {
+    if (state.timestamp && !state.success) {
+      turnstileRef.current?.reset();
+      setTurnstileToken("");
+    }
+  }, [state.timestamp, state.success]);
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  const handleResetForm = () => {
+    setIsResetting(true);
+    setTurnstileToken("");
+    turnstileRef.current?.reset();
+    formRef.current?.reset();
+    setTimeout(() => {
+      setIsResetting(false);
+    }, 100);
   };
 
   return (
@@ -243,37 +256,23 @@ export default function ContactClient() {
             </p>
           </div>
 
-          {/* Form */}
-          {submitted ? (
-            <div className="bg-white border-l-4 border-[#51B0B7] p-8 text-left shadow-sm">
-              <div className="flex items-start gap-3">
+          {/* Form / Success Feedback */}
+          {state.success && !isResetting ? (
+            <div className="bg-white border-l-4 border-[#51B0B7] p-8 text-left shadow-sm rounded-xs">
+              <div className="flex items-start gap-3.5">
                 <CheckCircle2 className="w-6 h-6 text-[#51B0B7] flex-shrink-0 mt-0.5" />
                 <div>
                   <h3 className="text-lg font-bold text-[#0F2C4E] mb-2">
                     Enquiry received
                   </h3>
                   <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                    Thank you, {formData.fullName || "valued client"}. Our freight
-                    operations team will review your cargo lane and reply with
-                    pricing and transit schedules within one business day.
+                    {state.message ||
+                      "Thank you! Our freight operations team will review your cargo lane and reply with pricing and transit schedules within one business day."}
                   </p>
                   <button
                     type="button"
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormData({
-                        fullName: "",
-                        company: "",
-                        email: "",
-                        phone: "",
-                        shipmentType: "Air Freight",
-                        expectedDate: "",
-                        origin: "",
-                        destination: "",
-                        details: "",
-                      });
-                    }}
-                    className="text-xs font-semibold text-[#184478] hover:text-[#51B0B7] transition-colors underline"
+                    onClick={handleResetForm}
+                    className="text-xs font-semibold text-[#184478] hover:text-[#51B0B7] transition-colors underline cursor-pointer"
                   >
                     Send another enquiry
                   </button>
@@ -281,13 +280,38 @@ export default function ContactClient() {
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="text-left" noValidate={false}>
+            <form
+              ref={formRef}
+              action={formAction}
+              className="text-left"
+              noValidate
+            >
+              {/* Form-level error alert */}
+              {state.errors?._form && (
+                <div className="mb-6 p-4 rounded-md bg-red-50 border border-red-200 text-red-800 text-sm flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold block">Submission error</span>
+                    <p className="text-xs mt-0.5 text-red-700">
+                      {state.errors._form[0]}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Hidden Turnstile Token Input */}
+              <input
+                type="hidden"
+                name="turnstileToken"
+                value={turnstileToken}
+              />
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7">
                 {/* Full name* */}
                 <div>
                   <label
                     htmlFor="fullName"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
                     Full name <span className="text-[#51B0B7]">*</span>
                   </label>
@@ -296,18 +320,21 @@ export default function ContactClient() {
                     id="fullName"
                     name="fullName"
                     required
-                    value={formData.fullName}
-                    onChange={handleChange}
                     placeholder="Your name"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
+                  {state.errors?.name && (
+                    <p className="text-xs text-red-600 mt-1.5 font-medium">
+                      {state.errors.name[0]}
+                    </p>
+                  )}
                 </div>
 
                 {/* Company */}
                 <div>
                   <label
                     htmlFor="company"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
                     Company
                   </label>
@@ -315,18 +342,21 @@ export default function ContactClient() {
                     type="text"
                     id="company"
                     name="company"
-                    value={formData.company}
-                    onChange={handleChange}
                     placeholder="Company name"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
+                  {state.errors?.company && (
+                    <p className="text-xs text-red-600 mt-1.5 font-medium">
+                      {state.errors.company[0]}
+                    </p>
+                  )}
                 </div>
 
                 {/* Email* */}
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
                     Email <span className="text-[#51B0B7]">*</span>
                   </label>
@@ -335,18 +365,21 @@ export default function ContactClient() {
                     id="email"
                     name="email"
                     required
-                    value={formData.email}
-                    onChange={handleChange}
                     placeholder="you@company.com"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
+                  {state.errors?.email && (
+                    <p className="text-xs text-red-600 mt-1.5 font-medium">
+                      {state.errors.email[0]}
+                    </p>
+                  )}
                 </div>
 
                 {/* Phone */}
                 <div>
                   <label
                     htmlFor="phone"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
                     Phone
                   </label>
@@ -354,26 +387,28 @@ export default function ContactClient() {
                     type="tel"
                     id="phone"
                     name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
                     placeholder="+971..."
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
+                  {state.errors?.phone && (
+                    <p className="text-xs text-red-600 mt-1.5 font-medium">
+                      {state.errors.phone[0]}
+                    </p>
+                  )}
                 </div>
 
                 {/* Service type */}
                 <div>
                   <label
                     htmlFor="shipmentType"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
                     Service type
                   </label>
                   <select
                     id="shipmentType"
                     name="shipmentType"
-                    value={formData.shipmentType}
-                    onChange={handleChange}
+                    defaultValue="Air Freight"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors cursor-pointer"
                   >
                     <option value="Air Freight">Air Freight</option>
@@ -393,7 +428,7 @@ export default function ContactClient() {
                 <div>
                   <label
                     htmlFor="expectedDate"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
                     Expected date
                   </label>
@@ -401,8 +436,6 @@ export default function ContactClient() {
                     type="text"
                     id="expectedDate"
                     name="expectedDate"
-                    value={formData.expectedDate}
-                    onChange={handleChange}
                     placeholder="e.g. Mid-November"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -412,7 +445,7 @@ export default function ContactClient() {
                 <div>
                   <label
                     htmlFor="origin"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
                     Origin
                   </label>
@@ -420,8 +453,6 @@ export default function ContactClient() {
                     type="text"
                     id="origin"
                     name="origin"
-                    value={formData.origin}
-                    onChange={handleChange}
                     placeholder="City, country"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
@@ -431,7 +462,7 @@ export default function ContactClient() {
                 <div>
                   <label
                     htmlFor="destination"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
                     Destination
                   </label>
@@ -439,30 +470,63 @@ export default function ContactClient() {
                     type="text"
                     id="destination"
                     name="destination"
-                    value={formData.destination}
-                    onChange={handleChange}
                     placeholder="City, country"
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
                   />
                 </div>
 
-                {/* Shipment details (full width) */}
+                {/* Shipment details / Message (full width)* */}
                 <div className="sm:col-span-2">
                   <label
                     htmlFor="details"
-                    className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+                    className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
                   >
-                    Shipment details
+                    Shipment details / Message <span className="text-[#51B0B7]">*</span>
                   </label>
                   <textarea
                     id="details"
                     name="details"
                     rows={3}
-                    value={formData.details}
-                    onChange={handleChange}
-                    placeholder="Cargo type, approximate weight/volume, any special handling..."
+                    required
+                    placeholder="Cargo type, approximate weight/volume, any special handling requirements..."
                     className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors resize-y"
                   />
+                  {state.errors?.message && (
+                    <p className="text-xs text-red-600 mt-1.5 font-medium">
+                      {state.errors.message[0]}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Cloudflare Turnstile Verification Widget */}
+              <div className="mt-8 pt-2">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider">
+                    <ShieldCheck className="w-4 h-4 text-[#51B0B7]" />
+                    <span>Security Verification</span>
+                  </div>
+                  <div className="min-h-[65px]">
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={
+                        process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
+                        "1x00000000000000000000AA"
+                      }
+                      onSuccess={(token) => setTurnstileToken(token)}
+                      onExpire={() => setTurnstileToken("")}
+                      onError={() => setTurnstileToken("")}
+                      options={{
+                        theme: "light",
+                        size: "normal",
+                      }}
+                    />
+                  </div>
+                  {state.errors?.turnstile && (
+                    <p className="text-xs text-red-600 mt-1 font-medium">
+                      {state.errors.turnstile[0]}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -470,15 +534,34 @@ export default function ContactClient() {
               <div className="mt-8 pt-2">
                 <button
                   type="submit"
-                  className="bg-[#184478] hover:bg-[#0F2C4E] text-white px-7 py-3.5 font-semibold text-sm transition-colors inline-flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#51B0B7]"
+                  disabled={isPending}
+                  className="bg-[#184478] hover:bg-[#51B0B7] disabled:bg-slate-400 text-white px-7 py-3.5 font-semibold text-sm transition-all duration-200 inline-flex items-center gap-2.5 cursor-pointer disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#51B0B7] shadow-sm active:scale-[0.99]"
                 >
-                  <span>Send enquiry</span>
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  {isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-white" />
+                      <span>Verifying &amp; sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send enquiry</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </>
+                  )}
                 </button>
 
                 <div className="text-xs text-slate-500 leading-relaxed mt-4 space-y-0.5">
                   <p>We reply from our operations team, not an automated chatbot.</p>
-                  <p>We respect your privacy; details are never shared.</p>
+                  <p>
+                    For immediate urgent shipments, call our Head Office directly at{" "}
+                    <a
+                      href="tel:+97142952885"
+                      className="text-[#184478] font-semibold hover:text-[#51B0B7] transition-colors"
+                    >
+                      +971 (4) 295 2885
+                    </a>
+                    .
+                  </p>
                 </div>
               </div>
             </form>
@@ -489,12 +572,18 @@ export default function ContactClient() {
       {/* =========================================================================
           3. OUR OFFICES SECTION (Full width dark gradient band, manifest-style sheet)
          ========================================================================= */}
-      <section id="offices" className="shepherd-stripes-bg text-white py-20 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+      <section
+        id="offices"
+        className="shepherd-stripes-bg text-white py-20 px-6 sm:px-8 lg:px-12 relative overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-10 sm:mb-12 max-w-2xl text-left">
+            <span className="inline-block text-[#51B0B7] text-xs font-semibold tracking-wider uppercase mb-2">
+              Global Presence
+            </span>
             <h2
-              className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white mb-2"
+              className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight"
               style={{
                 fontFamily:
                   'var(--font-archivo), var(--font-inter), system-ui, sans-serif',
@@ -503,95 +592,77 @@ export default function ContactClient() {
             >
               Our offices
             </h2>
-            <p className="text-slate-300/90 text-sm sm:text-base leading-relaxed">
-              Eight locations across the UAE and overseas, each handling its own
-              pickups, customs and warehousing.
+            <p className="text-slate-300 text-sm sm:text-base mt-2">
+              8 locations across the UAE, Hong Kong, and North America.
             </p>
           </div>
 
-          {/* Manifest Sheet */}
-          <div className="w-full">
-            {/* Header row (Desktop only: small caps labels) */}
-            <div className="hidden md:grid md:grid-cols-12 gap-6 pb-3 border-b border-white/10 text-[11px] font-semibold uppercase tracking-wider text-slate-400/90 select-none">
-              <div className="md:col-span-3">Office</div>
-              <div className="md:col-span-4">Address</div>
-              <div className="md:col-span-3">Phone</div>
-              <div className="md:col-span-2">Hours</div>
-            </div>
-
-            {/* Office Rows with hairline dividers */}
-            <div className="divide-y divide-white/10">
-              {officesData.map((office) => (
-                <div
-                  key={office.name}
-                  className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-start text-left"
-                >
-                  {/* Office Column */}
-                  <div className="md:col-span-3">
-                    <span className="block text-white font-semibold text-base sm:text-lg leading-snug">
-                      {office.name}
-                    </span>
-                    <span className="block text-[#51B0B7] text-xs font-medium mt-0.5 uppercase tracking-wide">
-                      {office.sublabel}
-                    </span>
-                  </div>
-
-                  {/* Address Column */}
-                  <div className="md:col-span-4">
-                    <span className="md:hidden block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                      Address
-                    </span>
-                    {office.isComingSoon ? (
-                      <span className="text-[#51B0B7] text-sm italic">
-                        coming soon
-                      </span>
-                    ) : (
-                      <p
-                        className="text-slate-300 text-sm leading-relaxed"
-                        style={{
-                          fontFamily:
-                            'var(--font-manrope), "Noto Sans HK", "Microsoft JhengHei", "PingFang HK", system-ui, sans-serif',
-                        }}
-                      >
-                        {office.address}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Phone Column */}
-                  <div className="md:col-span-3">
-                    <span className="md:hidden block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                      Phone
-                    </span>
-                    {office.phones.length === 1 && office.phones[0] === "—" ? (
-                      <span className="text-slate-400 text-sm">—</span>
-                    ) : (
-                      <div className="flex flex-col gap-1 text-sm text-slate-300">
-                        {office.phones.map((phone, pIdx) => (
-                          <a
-                            key={pIdx}
-                            href={`tel:${phone.replace(/[^0-9+]/g, "")}`}
-                            className="hover:text-[#51B0B7] transition-colors inline-block"
-                          >
-                            {phone}
-                          </a>
-                        ))}
+          {/* Manifest Table / Sheet */}
+          <div className="overflow-x-auto border-t border-b border-white/15">
+            <table className="w-full text-left text-sm border-collapse min-w-[700px]">
+              <thead>
+                <tr className="border-b border-white/15 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  <th className="py-3.5 pr-6 font-semibold w-[22%]">Office</th>
+                  <th className="py-3.5 px-6 font-semibold w-[38%]">Address</th>
+                  <th className="py-3.5 px-6 font-semibold w-[22%]">Phone(s)</th>
+                  <th className="py-3.5 pl-6 font-semibold w-[18%]">Hours</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10 text-white/90">
+                {officesData.map((office, idx) => (
+                  <tr
+                    key={idx}
+                    className="hover:bg-white/[0.03] transition-colors align-top"
+                  >
+                    {/* Office Name & Sublabel */}
+                    <td className="py-4 pr-6">
+                      <div className="font-semibold text-white">
+                        {office.name}
                       </div>
-                    )}
-                  </div>
+                      <div className="text-xs text-[#51B0B7] mt-0.5">
+                        {office.sublabel}
+                      </div>
+                    </td>
 
-                  {/* Hours Column */}
-                  <div className="md:col-span-2">
-                    <span className="md:hidden block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                      Hours
-                    </span>
-                    <span className="text-slate-300 text-sm leading-relaxed block">
+                    {/* Address */}
+                    <td className="py-4 px-6 text-slate-300 text-xs sm:text-sm leading-relaxed">
+                      {office.isComingSoon ? (
+                        <span className="text-slate-500 italic">
+                          Location details coming soon
+                        </span>
+                      ) : (
+                        office.address
+                      )}
+                    </td>
+
+                    {/* Phones */}
+                    <td className="py-4 px-6 text-xs sm:text-sm">
+                      {office.isComingSoon ? (
+                        <span className="text-slate-500">—</span>
+                      ) : (
+                        <div className="space-y-1">
+                          {office.phones.map((p, pIdx) => (
+                            <div key={pIdx}>
+                              <a
+                                href={`tel:${p.replace(/[^0-9+]/g, "")}`}
+                                className="text-white hover:text-[#51B0B7] transition-colors whitespace-nowrap"
+                              >
+                                {p}
+                              </a>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </td>
+
+                    {/* Hours */}
+                    <td className="py-4 pl-6 text-xs text-slate-300">
                       {office.hours}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
