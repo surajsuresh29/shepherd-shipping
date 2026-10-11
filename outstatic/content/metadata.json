@@ -1,6 +1,6 @@
 {
-  "commit": "297305103854e70e4e780cb004dd9d80e616a9d8",
-  "generated": "2026-10-11T11:23:24.508Z",
+  "commit": "5a4ba10232d440c3ab46c196bec8e200e6f5b50f",
+  "generated": "2026-10-11T11:25:53.258Z",
   "metadata": [
     {
       "__outstatic": {
@@ -53,8 +53,8 @@
     },
     {
       "__outstatic": {
-        "commit": "297305103854e70e4e780cb004dd9d80e616a9d8",
-        "hash": "2895242814",
+        "commit": "5a4ba10232d440c3ab46c196bec8e200e6f5b50f",
+        "hash": "2228842779",
         "path": "outstatic/content/posts/test-cover-image.md"
       },
       "author": {
@@ -65,7 +65,7 @@
       "collection": "posts",
       "coverImage": "/media/images/service-customs-A5NT.jpg",
       "description": "test description",
-      "featured": false,
+      "featured": true,
       "publishedAt": "2026-10-11T10:57:29.607Z",
       "readTime": "2 min read",
       "slug": "test-cover-image",

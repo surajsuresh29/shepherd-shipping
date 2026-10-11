@@ -7,7 +7,7 @@ author:
   picture: https://avatars.githubusercontent.com/u/39479214?v=4
 slug: test-cover-image
 coverImage: /media/images/service-customs-A5NT.jpg
-featured: false
+featured: true
 category: Industry News
 readTime: 2 min read
 description: test description
