@@ -224,3 +224,26 @@ p, h1, h2, h3, h4, h5, h6, li, blockquote, input, textarea {
 .nav-link:hover::after {
   width: 100%;
 }
+
+/* Subtle diagonal stripes pattern matching Shepherd brand design */
+.shepherd-stripes-bg {
+  background-color: #0f2640;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.035) 0px,
+    rgba(255, 255, 255, 0.035) 1.5px,
+    transparent 1.5px,
+    transparent 14px
+  );
+}
+
+.shepherd-card-pattern {
+  background-color: #122842;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.03) 0px,
+    rgba(255, 255, 255, 0.03) 1.5px,
+    transparent 1.5px,
+    transparent 14px
+  );
+}

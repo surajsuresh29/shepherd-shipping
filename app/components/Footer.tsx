@@ -2,10 +2,10 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 const quickLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About Us", href: "#about" },
-  { label: "Air Freight and Cargo Services in Dubai", href: "#services" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "About Us", href: "/#about" },
+  { label: "Services", href: "/#services" },
+  { label: "Blogs", href: "/blog" },
 ];
 
 export default function Footer() {

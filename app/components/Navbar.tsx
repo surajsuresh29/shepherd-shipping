@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -16,6 +17,7 @@ const navLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,16 +64,21 @@ export default function Navbar() {
         {/* Right side: Nav Links + CTA Button */}
         <div className="hidden md:flex items-center gap-8">
           <ul className="flex items-center gap-6">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className="nav-link text-white text-[15px] font-medium tracking-wide hover:text-secondary transition-colors"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = link.href === "/blog" ? pathname.startsWith("/blog") : pathname === link.href;
+              return (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className={`nav-link text-[15px] font-medium tracking-wide transition-colors ${
+                      isActive ? "text-secondary" : "text-white hover:text-secondary"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           <a
