@@ -2,5 +2,22 @@
   "title": "posts",
   "slug": "posts",
   "type": "object",
-  "properties": {}
+  "properties": {
+    "featured": {
+      "title": "Featured",
+      "type": "boolean"
+    },
+    "category": {
+      "title": "Category",
+      "type": "string"
+    },
+    "readTime": {
+      "title": "Read Time",
+      "type": "string"
+    },
+    "photoCaption": {
+      "title": "Photo Caption",
+      "type": "string"
+    }
+  }
 }

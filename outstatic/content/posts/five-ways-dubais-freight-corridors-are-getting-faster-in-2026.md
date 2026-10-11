@@ -11,6 +11,7 @@ category: Logistics
 coverImage: ''
 readTime: 5 min read
 photoCaption: 'Cover photo: cargo ship departing a container terminal at dawn'
+featured: true
 ---
 
 Dubai continues to cement its reputation as the world's most dynamic multimodal logistics crossroads. In 2026, a series of infrastructure expansions, technological integrations, and regulatory upgrades have converged to slash transit windows across key corridors.

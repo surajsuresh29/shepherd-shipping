@@ -17,6 +17,7 @@ export interface BlogPostItem {
   category?: string;
   readTime?: string;
   photoCaption?: string;
+  featured?: boolean;
 }
 
 const CATEGORIES = [
@@ -109,10 +110,19 @@ export default function BlogIndexClient({
     }
   };
 
-  // Determine featured post and grid posts
+  // Determine featured post: latest article with featured: true flag (or fallback to latest article)
   const isDefaultView = selectedCategory === "All" && !activeSearch && currentPage === 1;
-  const featuredPost = isDefaultView && filteredPosts.length > 0 ? filteredPosts[0] : null;
-  const gridCandidates = isDefaultView ? filteredPosts.slice(1) : filteredPosts;
+  const latestFeaturedPost = useMemo(() => {
+    return (
+      filteredPosts.find((p) => p.featured === true) ||
+      (filteredPosts.length > 0 ? filteredPosts[0] : null)
+    );
+  }, [filteredPosts]);
+
+  const featuredPost = isDefaultView ? latestFeaturedPost : null;
+  const gridCandidates = isDefaultView && featuredPost
+    ? filteredPosts.filter((p) => p.slug !== featuredPost.slug)
+    : filteredPosts;
 
   const POSTS_PER_PAGE = 6;
   const totalPages = Math.max(1, Math.ceil(gridCandidates.length / POSTS_PER_PAGE));

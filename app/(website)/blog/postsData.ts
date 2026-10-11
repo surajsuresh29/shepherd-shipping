@@ -14,6 +14,7 @@ export const DEFAULT_POSTS: BlogPostFull[] = [
     author: { name: "Sara Al-Maktli" },
     readTime: "5 min read",
     photoCaption: "Cover photo: cargo ship departing a container terminal at dawn",
+    featured: true,
     content: `
 Dubai continues to cement its position as the global crossroads of sea, air, and multimodal freight logistics. In 2026, a series of infrastructure expansions, automated customs clearances, and enhanced corridor connectivity have combined to drastically reduce transit times across the UAE.
 
