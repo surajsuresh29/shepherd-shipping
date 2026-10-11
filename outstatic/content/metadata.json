@@ -1,6 +1,6 @@
 {
-  "commit": "5036bc8fa1808ccc314e1c9ecb19af29a427432e",
-  "generated": "2026-10-11T10:43:46.833Z",
+  "commit": "8b942fa4750c706031f0097d024f0c768506278e",
+  "generated": "2026-10-11T10:58:13.787Z",
   "metadata": [
     {
       "__outstatic": {
@@ -50,6 +50,26 @@
       "slug": "test-article",
       "status": "published",
       "title": "Test Article"
+    },
+    {
+      "__outstatic": {
+        "commit": "8b942fa4750c706031f0097d024f0c768506278e",
+        "hash": "528445047",
+        "path": "outstatic/content/posts/test-cover-image.md"
+      },
+      "author": {
+        "name": "Suraj Suresh",
+        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
+      },
+      "category": "Industry News",
+      "collection": "posts",
+      "coverImage": "/media/images/service-customs-A5NT.jpg",
+      "featured": true,
+      "publishedAt": "2026-10-11T10:57:29.607Z",
+      "readTime": "2 min read",
+      "slug": "test-cover-image",
+      "status": "published",
+      "title": ""
     }
   ]
 }
