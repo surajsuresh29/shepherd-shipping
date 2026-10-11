@@ -1,6 +1,6 @@
 {
-  "commit": "6d5d0d804faaeb3a26519e1817c86b8d7093b10d",
-  "generated": "2026-10-11T08:16:17.280Z",
+  "commit": "8bcf8e88de8f22f5cdffc15ce377f10e4841a446",
+  "generated": "2026-10-11T08:16:30.260Z",
   "metadata": [
     {
       "__outstatic": {
@@ -36,8 +36,8 @@
     },
     {
       "__outstatic": {
-        "commit": "6d5d0d804faaeb3a26519e1817c86b8d7093b10d",
-        "hash": "3349666705",
+        "commit": "8bcf8e88de8f22f5cdffc15ce377f10e4841a446",
+        "hash": "2794242019",
         "path": "outstatic/content/posts/test-post-3.md"
       },
       "author": {
@@ -47,7 +47,7 @@
       "collection": "posts",
       "publishedAt": "2022-06-30T18:30:00.000Z",
       "slug": "test-post-3",
-      "status": "draft",
+      "status": "published",
       "title": "Test Post 3"
     }
   ]
