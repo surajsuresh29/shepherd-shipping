@@ -42,7 +42,7 @@ const navLinks = [
   { label: "Services", href: "/#services" },
   { label: "About Us", href: "/about" },
   { label: "Locations", href: "/#locations" },
-  { label: "Contact Us", href: "/#contact" },
+  { label: "Contact Us", href: "/contact" },
   { label: "Blogs", href: "/blog" },
 ];
 
@@ -206,6 +206,8 @@ export default function Navbar() {
                   ? pathname.startsWith("/blog")
                   : link.href === "/about"
                   ? pathname.startsWith("/about")
+                  : link.href === "/contact"
+                  ? pathname.startsWith("/contact")
                   : pathname === link.href;
 
               return (
@@ -224,7 +226,7 @@ export default function Navbar() {
           </ul>
 
           <a
-            href="/#contact"
+            href="/contact"
             className="inline-flex items-center bg-secondary hover:bg-secondary-dark text-primary font-semibold text-[15px] px-7 py-2.5 rounded-full hover:scale-105 transition-all duration-300 relative z-[60]"
           >
             Get a quote
@@ -309,7 +311,7 @@ export default function Navbar() {
             })}
             <li>
               <a
-                href="/#contact"
+                href="/contact"
                 onClick={() => setMobileOpen(false)}
                 className="inline-flex items-center bg-secondary hover:bg-secondary-dark text-primary font-semibold px-6 py-2 rounded-full transition-all duration-300 mt-2"
               >

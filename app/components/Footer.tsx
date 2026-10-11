@@ -8,7 +8,7 @@ const quickLinks = [
   { label: "Services", href: "/#services" },
   { label: "Industries", href: "/#industries" },
   { label: "Blogs", href: "/blog" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const socialLinks = [
