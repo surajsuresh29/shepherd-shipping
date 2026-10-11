@@ -361,13 +361,13 @@ export default function ContactClient() {
                   />
                 </div>
 
-                {/* Shipment type */}
+                {/* Service type */}
                 <div>
                   <label
                     htmlFor="shipmentType"
                     className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
                   >
-                    Shipment type
+                    Service type
                   </label>
                   <select
                     id="shipmentType"
