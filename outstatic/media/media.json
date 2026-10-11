@@ -1,7 +1,19 @@
 {
-  "commit": "41540e9f068dddff30a9bdc7cf9a2381b56c1fb3",
-  "generated": "2026-10-10T20:58:15.593Z",
+  "commit": "7c9f884f52e03228025cf831c5ff147e2240030e",
+  "generated": "2026-10-11T10:56:28.884Z",
   "media": [
+    {
+      "__outstatic": {
+        "commit": "7c9f884f52e03228025cf831c5ff147e2240030e",
+        "hash": "2504332266",
+        "path": "public/media/images/service-customs-A5NT.jpg"
+      },
+      "alt": "",
+      "filename": "service-customs-A5NT.jpg",
+      "publishedAt": "2026-10-11T10:56:28.884Z",
+      "source": "images",
+      "type": "image"
+    },
     {
       "__outstatic": {
         "commit": "41540e9f068dddff30a9bdc7cf9a2381b56c1fb3",
