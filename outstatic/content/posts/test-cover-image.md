@@ -10,6 +10,7 @@ coverImage: /media/images/service-customs-A5NT.jpg
 featured: false
 category: Industry News
 readTime: 2 min read
+description: test description
 ---
 
 this is a test article

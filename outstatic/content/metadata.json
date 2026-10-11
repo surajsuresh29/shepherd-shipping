@@ -1,6 +1,6 @@
 {
-  "commit": "cc188efe24e94f4c4e9937048c13e04adc38d436",
-  "generated": "2026-10-11T11:01:58.097Z",
+  "commit": "297305103854e70e4e780cb004dd9d80e616a9d8",
+  "generated": "2026-10-11T11:23:24.508Z",
   "metadata": [
     {
       "__outstatic": {
@@ -53,8 +53,8 @@
     },
     {
       "__outstatic": {
-        "commit": "cc188efe24e94f4c4e9937048c13e04adc38d436",
-        "hash": "1190315857",
+        "commit": "297305103854e70e4e780cb004dd9d80e616a9d8",
+        "hash": "2895242814",
         "path": "outstatic/content/posts/test-cover-image.md"
       },
       "author": {
@@ -64,6 +64,7 @@
       "category": "Industry News",
       "collection": "posts",
       "coverImage": "/media/images/service-customs-A5NT.jpg",
+      "description": "test description",
       "featured": false,
       "publishedAt": "2026-10-11T10:57:29.607Z",
       "readTime": "2 min read",
