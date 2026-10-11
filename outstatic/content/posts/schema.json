@@ -3,6 +3,20 @@
   "slug": "posts",
   "type": "object",
   "properties": {
+    "coverImage": {
+      "title": "Cover Image",
+      "fieldType": "Image",
+      "dataType": "image",
+      "description": "Upload or select a cover image for this article",
+      "required": false
+    },
+    "photoCaption": {
+      "title": "Photo Caption",
+      "fieldType": "String",
+      "dataType": "string",
+      "description": "Label displayed on card cover photo",
+      "required": false
+    },
     "featured": {
       "title": "Featured",
       "fieldType": "Boolean",
@@ -29,13 +43,6 @@
       "fieldType": "String",
       "dataType": "string",
       "description": "e.g. 5 min read",
-      "required": false
-    },
-    "photoCaption": {
-      "title": "Photo Caption",
-      "fieldType": "String",
-      "dataType": "string",
-      "description": "Card cover photo caption or label",
       "required": false
     }
   }
