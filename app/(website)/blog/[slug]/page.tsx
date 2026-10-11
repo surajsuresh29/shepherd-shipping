@@ -166,6 +166,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               src={post.coverImage}
               alt={post.title}
               fill
+              unoptimized
               className="object-cover"
             />
           ) : null}
