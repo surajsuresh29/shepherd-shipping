@@ -3,6 +3,13 @@
   "slug": "posts",
   "type": "object",
   "properties": {
+    "description": {
+      "title": "Description",
+      "fieldType": "Text",
+      "dataType": "string",
+      "description": "Short summary or excerpt of the article",
+      "required": false
+    },
     "coverImage": {
       "title": "Cover Image",
       "fieldType": "Image",
