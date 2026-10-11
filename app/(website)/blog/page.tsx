@@ -2,6 +2,20 @@ import { getDocuments } from 'outstatic/server'
 import BlogIndexClient, { BlogPostItem } from './BlogIndexClient'
 import { DEFAULT_POSTS } from './postsData'
 
+function extractExcerpt(content?: string, maxLength = 160): string {
+  if (!content) return ''
+  const clean = content
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/^>+\s*/gm, '')
+    .replace(/#+\s*/g, '')
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+    .replace(/[*_~`]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (!clean) return ''
+  return clean.length > maxLength ? clean.slice(0, maxLength).trim() + '...' : clean
+}
+
 export default async function BlogIndex() {
   let dbPosts: any[] = []
 
@@ -11,6 +25,7 @@ export default async function BlogIndex() {
       'slug',
       'publishedAt',
       'description',
+      'content',
       'coverImage',
       'author',
       'category',
@@ -34,11 +49,15 @@ export default async function BlogIndex() {
       dateStr = new Date().toISOString()
     }
 
+    const fallbackDescription =
+      extractExcerpt(post.content) ||
+      'Insights, updates, and analysis from the Shepherd logistics team.'
+
     return {
       title: post.title || 'Untitled Post',
       slug: post.slug,
       publishedAt: dateStr,
-      description: post.description || '',
+      description: post.description || fallbackDescription,
       coverImage: post.coverImage || '',
       author: post.author,
       category: post.category || 'Logistics',

@@ -236,7 +236,8 @@ export default function BlogIndexClient({
                       {featuredPost.title}
                     </h2>
                     <p className="text-slate-500 text-sm sm:text-base leading-relaxed line-clamp-3">
-                      {featuredPost.description}
+                      {featuredPost.description ||
+                        "Insights and analysis from the Shepherd logistics team."}
                     </p>
                   </div>
 
