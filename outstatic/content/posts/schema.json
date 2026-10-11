@@ -2,5 +2,41 @@
   "title": "posts",
   "slug": "posts",
   "type": "object",
-  "properties": {}
+  "properties": {
+    "featured": {
+      "title": "Featured",
+      "fieldType": "Boolean",
+      "dataType": "boolean",
+      "description": "Show as the featured article in the top space",
+      "required": false
+    },
+    "category": {
+      "title": "Category",
+      "fieldType": "Select",
+      "dataType": "string",
+      "description": "Post category",
+      "required": false,
+      "values": [
+        { "label": "Logistics", "value": "Logistics" },
+        { "label": "Customs", "value": "Customs" },
+        { "label": "Warehousing", "value": "Warehousing" },
+        { "label": "Industry News", "value": "Industry News" },
+        { "label": "Company Updates", "value": "Company Updates" }
+      ]
+    },
+    "readTime": {
+      "title": "Read Time",
+      "fieldType": "String",
+      "dataType": "string",
+      "description": "e.g. 5 min read",
+      "required": false
+    },
+    "photoCaption": {
+      "title": "Photo Caption",
+      "fieldType": "String",
+      "dataType": "string",
+      "description": "Card cover photo caption or label",
+      "required": false
+    }
+  }
 }
