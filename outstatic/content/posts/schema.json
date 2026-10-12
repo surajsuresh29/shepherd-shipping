@@ -2,7 +2,7 @@
   "title": "posts",
   "type": "object",
   "settings": {
-    "fieldsOnlyMode": true
+    "fieldsOnlyMode": false
   },
   "properties": {
     "description": {
