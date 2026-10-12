@@ -1,6 +1,6 @@
 {
-  "commit": "5a4ba10232d440c3ab46c196bec8e200e6f5b50f",
-  "generated": "2026-10-11T11:25:53.258Z",
+  "commit": "5cfaca3c48ea8ea483662e657befec729730a234",
+  "generated": "2026-10-12T17:05:30.128Z",
   "metadata": [
     {
       "__outstatic": {
@@ -71,6 +71,22 @@
       "slug": "test-cover-image",
       "status": "published",
       "title": "test cover image"
+    },
+    {
+      "__outstatic": {
+        "commit": "5cfaca3c48ea8ea483662e657befec729730a234",
+        "hash": "2016825194",
+        "path": "outstatic/content/posts/hi.md"
+      },
+      "author": {
+        "name": "",
+        "picture": "https://avatars.githubusercontent.com/u/341582934?v=4"
+      },
+      "collection": "posts",
+      "publishedAt": "2026-10-12T17:05:18.054Z",
+      "slug": "hi",
+      "status": "draft",
+      "title": "hi"
     }
   ]
 }
