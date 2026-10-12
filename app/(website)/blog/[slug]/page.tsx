@@ -6,22 +6,10 @@ import Image from 'next/image'
 import { DEFAULT_POSTS, BlogPostFull } from '../postsData'
 
 export async function generateStaticParams() {
-  const slugs = new Set<string>()
-
-  // Add default posts
-  DEFAULT_POSTS.forEach((p) => slugs.add(p.slug))
-
-  // Add Outstatic posts
-  try {
-    const posts = getDocuments('posts', ['slug'])
-    posts.forEach((p) => {
-      if (p.slug) slugs.add(p.slug)
-    })
-  } catch (e) {
-    // Graceful fallback
-  }
-
-  return Array.from(slugs).map((slug) => ({ slug }))
+  const posts = getDocuments('posts', ['slug'])
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
 }
 
 function getInitials(name: string = ""): string {
