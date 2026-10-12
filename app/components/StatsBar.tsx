@@ -1,8 +1,54 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Clock, Building2, LayoutGrid, MapPin } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Building2, MapPin } from "lucide-react";
+
+function HourglassIcon({
+  className,
+  strokeWidth = 1.8,
+}: {
+  className?: string;
+  strokeWidth?: number;
+}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M5 22h14M5 2h14M17 2c0 4-5 5-5 10s5 6 5 10M7 2c0 4 5 5 5 10s-5 6-5 10" />
+    </svg>
+  );
+}
+
+function CrateIcon({
+  className,
+  strokeWidth = 1.8,
+}: {
+  className?: string;
+  strokeWidth?: number;
+}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M21 8L12 3 3 8l9 5 9-5z" />
+      <path d="M3 8v8l9 5 9-5V8M12 13v8" />
+    </svg>
+  );
+}
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -11,13 +57,13 @@ import type { LucideIcon } from "lucide-react";
 interface Stat {
   target: number;
   label: string;
-  icon: LucideIcon;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
 }
 
 const stats: Stat[] = [
-  { target: 21, label: "Years experience in transportation", icon: Clock },
+  { target: 21, label: "Years experience in transportation", icon: HourglassIcon },
   { target: 2004, label: "Established in Dubai, U.A.E.", icon: Building2 },
-  { target: 4, label: "Core services: air, sea, customs, 3PL", icon: LayoutGrid },
+  { target: 4, label: "Core services: air, sea, customs, 3PL", icon: CrateIcon },
   { target: 8, label: "Offices across UAE, HK & US", icon: MapPin },
 ];
 
@@ -97,12 +143,12 @@ function StatCell({
       {/* Number + label */}
       <div>
         <div
-          className="cursor-text text-[#51B0B7] text-4xl lg:text-5xl font-bold tracking-tight leading-none"
+          className="cursor-text text-white text-4xl lg:text-5xl font-bold tracking-tight leading-none"
           style={{ fontVariantNumeric: "tabular-nums" }}
         >
           {value}
         </div>
-        <div className="cursor-text text-white/90 text-[13px] mt-1.5 font-medium leading-snug max-w-[200px]">
+        <div className="cursor-text text-white text-[13px] mt-1.5 font-medium leading-snug max-w-[200px]">
           {stat.label}
         </div>
       </div>

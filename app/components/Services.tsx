@@ -74,10 +74,10 @@ export default function Services() {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
               <div className="p-4 sm:px-5 sm:py-4 flex-none">
-                <h3 className="text-xl font-bold text-white mb-1">
+                <h3 className="text-xl font-bold text-white group-hover:text-primary mb-1">
                   {services[0].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white/80 group-hover:text-primary/90 text-sm leading-relaxed">
                   {services[0].description}
                 </p>
               </div>
@@ -98,10 +98,10 @@ export default function Services() {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
               <div className="p-4 sm:px-5 sm:py-4 flex-none">
-                <h3 className="text-xl font-bold text-white mb-1">
+                <h3 className="text-xl font-bold text-white group-hover:text-primary mb-1">
                   {services[3].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white/80 group-hover:text-primary/90 text-sm leading-relaxed">
                   {services[3].description}
                 </p>
               </div>
@@ -122,10 +122,10 @@ export default function Services() {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
               <div className="p-4 sm:px-5 sm:py-4 flex-none">
-                <h3 className="text-lg font-bold text-white mb-1">
+                <h3 className="text-lg font-bold text-white group-hover:text-primary mb-1">
                   {services[1].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white/80 group-hover:text-primary/90 text-sm leading-relaxed">
                   {services[1].description}
                 </p>
               </div>
@@ -146,10 +146,10 @@ export default function Services() {
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
               </div>
               <div className="p-4 sm:px-5 sm:py-4 flex-none">
-                <h3 className="text-lg font-bold text-white mb-1">
+                <h3 className="text-lg font-bold text-white group-hover:text-primary mb-1">
                   {services[2].title}
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white/80 group-hover:text-primary/90 text-sm leading-relaxed">
                   {services[2].description}
                 </p>
               </div>
