@@ -126,10 +126,26 @@ export default function BlogIndexClient({
 
   const POSTS_PER_PAGE = 6;
   const totalPages = Math.max(1, Math.ceil(gridCandidates.length / POSTS_PER_PAGE));
+  const safeCurrentPage = Math.max(1, Math.min(currentPage, totalPages));
   const currentGridPosts = gridCandidates.slice(
-    (currentPage - 1) * POSTS_PER_PAGE,
-    currentPage * POSTS_PER_PAGE
+    (safeCurrentPage - 1) * POSTS_PER_PAGE,
+    safeCurrentPage * POSTS_PER_PAGE
   );
+
+  const pageNumbers = useMemo(() => {
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    const pages: (number | string)[] = [];
+    if (safeCurrentPage <= 3) {
+      pages.push(1, 2, 3, 4, "...", totalPages);
+    } else if (safeCurrentPage >= totalPages - 2) {
+      pages.push(1, "...", totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+    } else {
+      pages.push(1, "...", safeCurrentPage - 1, safeCurrentPage, safeCurrentPage + 1, "...", totalPages);
+    }
+    return pages;
+  }, [totalPages, safeCurrentPage]);
 
   return (
     <div className="bg-white text-slate-800">
@@ -372,39 +388,50 @@ export default function BlogIndexClient({
         )}
 
         {/* Pagination */}
-        <div className="flex items-center justify-center gap-2 mb-16">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-            aria-label="Previous page"
-            className="w-9 h-9 rounded-lg border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-slate-50 hover:border-slate-300 transition-colors text-sm disabled:opacity-40 disabled:pointer-events-none"
-          >
-            ‹
-          </button>
-
-          {[1, 2, 3].map((pageNum) => (
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2 mb-16">
             <button
-              key={pageNum}
-              onClick={() => setCurrentPage(pageNum)}
-              className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors flex items-center justify-center ${
-                currentPage === pageNum
-                  ? "bg-[#18375A] text-white shadow-xs font-semibold"
-                  : "border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
-              }`}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={safeCurrentPage === 1}
+              aria-label="Previous page"
+              className="w-9 h-9 rounded-lg border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-slate-50 hover:border-slate-300 transition-colors text-sm disabled:opacity-40 disabled:pointer-events-none"
             >
-              {pageNum}
+              ‹
             </button>
-          ))}
 
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(3, p + 1))}
-            disabled={currentPage === 3}
-            aria-label="Next page"
-            className="w-9 h-9 rounded-lg border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-slate-50 hover:border-slate-300 transition-colors text-sm disabled:opacity-40 disabled:pointer-events-none"
-          >
-            ›
-          </button>
-        </div>
+            {pageNumbers.map((pageNum, idx) =>
+              typeof pageNum === "number" ? (
+                <button
+                  key={`page-${pageNum}`}
+                  onClick={() => setCurrentPage(pageNum)}
+                  className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors flex items-center justify-center ${
+                    safeCurrentPage === pageNum
+                      ? "bg-[#18375A] text-white shadow-xs font-semibold"
+                      : "border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300"
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              ) : (
+                <span
+                  key={`dots-${idx}`}
+                  className="w-9 h-9 flex items-center justify-center text-slate-400 text-sm select-none"
+                >
+                  …
+                </span>
+              )
+            )}
+
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={safeCurrentPage === totalPages}
+              aria-label="Next page"
+              className="w-9 h-9 rounded-lg border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-slate-50 hover:border-slate-300 transition-colors text-sm disabled:opacity-40 disabled:pointer-events-none"
+            >
+              ›
+            </button>
+          </div>
+        )}
 
         {/* Newsletter CTA Banner */}
         <section className="shepherd-stripes-bg rounded-3xl p-8 sm:p-10 lg:p-12 text-white shadow-md relative overflow-hidden mb-12">
