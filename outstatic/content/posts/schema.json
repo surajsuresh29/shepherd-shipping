@@ -1,7 +1,9 @@
 {
   "title": "posts",
-  "slug": "posts",
   "type": "object",
+  "settings": {
+    "fieldsOnlyMode": true
+  },
   "properties": {
     "description": {
       "title": "Description",
@@ -38,11 +40,26 @@
       "description": "Post category",
       "required": false,
       "values": [
-        { "label": "Logistics", "value": "Logistics" },
-        { "label": "Customs", "value": "Customs" },
-        { "label": "Warehousing", "value": "Warehousing" },
-        { "label": "Industry News", "value": "Industry News" },
-        { "label": "Company Updates", "value": "Company Updates" }
+        {
+          "label": "Logistics",
+          "value": "Logistics"
+        },
+        {
+          "label": "Customs",
+          "value": "Customs"
+        },
+        {
+          "label": "Warehousing",
+          "value": "Warehousing"
+        },
+        {
+          "label": "Industry News",
+          "value": "Industry News"
+        },
+        {
+          "label": "Company Updates",
+          "value": "Company Updates"
+        }
       ]
     },
     "readTime": {
