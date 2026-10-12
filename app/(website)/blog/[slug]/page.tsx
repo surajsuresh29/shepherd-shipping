@@ -179,7 +179,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             </div>
             <Link
               href="/#contact"
-              className="bg-[#51B0B7] hover:bg-[#43a1a8] text-[#0f2640] font-semibold text-sm px-6 py-2.5 rounded-full transition-all hover:scale-105 whitespace-nowrap"
+              className="bg-white hover:bg-secondary text-primary hover:text-white font-semibold text-sm px-6 py-2.5 rounded-full transition-all hover:scale-105 whitespace-nowrap shadow-md"
             >
               Get a quote
             </Link>

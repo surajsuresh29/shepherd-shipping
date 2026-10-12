@@ -60,7 +60,7 @@ export default function ServicePlaceholder({
             <div className="flex flex-col sm:flex-row md:flex-col gap-3 flex-shrink-0">
               <Link
                 href="/#contact"
-                className="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary-dark text-primary font-semibold text-sm sm:text-base px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
+                className="inline-flex items-center justify-center gap-2 bg-white hover:bg-secondary text-primary hover:text-white font-semibold text-sm sm:text-base px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 <span>Request a Quote</span>
                 <ArrowRight className="w-4 h-4" />

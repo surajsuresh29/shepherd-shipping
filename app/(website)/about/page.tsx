@@ -127,7 +127,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 href="/#contact"
-                className="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary-dark text-primary font-semibold text-sm sm:text-base px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
+                className="inline-flex items-center justify-center gap-2 bg-white hover:bg-secondary text-primary hover:text-white font-semibold text-sm sm:text-base px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
               >
                 <span>Work With Us</span>
                 <ArrowRight className="w-4 h-4" />
@@ -384,7 +384,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary-dark text-primary font-bold text-sm sm:text-base px-8 py-3.5 rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
+                className="inline-flex items-center gap-2 bg-white hover:bg-secondary text-primary hover:text-white font-bold text-sm sm:text-base px-8 py-3.5 rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
               >
                 <span>Contact Our Global Team</span>
                 <ArrowRight className="w-4 h-4" />

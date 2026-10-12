@@ -69,7 +69,7 @@ export default function About() {
             {/* CTA Button */}
             <Link
               href="/about"
-              className="inline-flex items-center bg-secondary hover:bg-secondary-dark text-primary font-semibold text-sm px-8 py-3.5 rounded-full hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
+              className="inline-flex items-center bg-white hover:bg-secondary text-primary hover:text-white font-semibold text-sm px-8 py-3.5 rounded-full hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
             >
               Learn more about us
             </Link>

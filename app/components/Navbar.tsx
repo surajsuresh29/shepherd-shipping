@@ -227,7 +227,7 @@ export default function Navbar() {
 
           <a
             href="/contact"
-            className="inline-flex items-center bg-secondary hover:bg-secondary-dark text-primary font-semibold text-[15px] px-7 py-2.5 rounded-full hover:scale-105 transition-all duration-300 relative z-[60]"
+            className="inline-flex items-center bg-white hover:bg-secondary text-primary hover:text-white font-semibold text-[15px] px-7 py-2.5 rounded-full hover:scale-105 transition-all duration-300 relative z-[60]"
           >
             Get a quote
           </a>
@@ -313,7 +313,7 @@ export default function Navbar() {
               <a
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center bg-secondary hover:bg-secondary-dark text-primary font-semibold px-6 py-2 rounded-full transition-all duration-300 mt-2"
+                className="inline-flex items-center bg-white hover:bg-secondary text-primary hover:text-white font-semibold px-6 py-2 rounded-full transition-all duration-300 mt-2"
               >
                 Get a quote
               </a>
