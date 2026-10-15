@@ -173,34 +173,58 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/40 text-xs">
-            © 2026 Shepherd International logistics. All rights reserved
-          </p>
-
-          {/* Social links row in bottom bar only */}
-          <div className="flex items-center gap-3">
-            {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.name}
-                title={social.name}
-                className="text-white/40 hover:text-secondary transition-colors p-1"
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1 text-white/40 text-xs">
+              <span>© 2026 Shepherd International logistics. All rights reserved</span>
+              <span>•</span>
+              <Link
+                href="/privacy"
+                className="hover:text-secondary underline underline-offset-2 transition-colors"
               >
-                {social.icon}
-              </a>
-            ))}
-          </div>
+                Privacy Policy
+              </Link>
+            </div>
 
-          <a
-            href="https://shepherdshipping.com"
-            className="text-white/40 text-xs hover:text-secondary transition-colors"
-          >
-            shepherdshipping.com
-          </a>
+            {/* Social links row in bottom bar only */}
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  title={social.name}
+                  className="text-white/40 hover:text-secondary transition-colors p-1"
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+
+            <a
+              href="https://shepherdshipping.com"
+              className="text-white/40 text-xs hover:text-secondary transition-colors"
+            >
+              shepherdshipping.com
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Microsoft Clarity Disclosure — third footer tier */}
+      <div className="border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-6 py-4 text-center md:text-left">
+          <p className="text-xs leading-relaxed max-w-4xl" style={{ color: "#8CA0C0" }}>
+            We improve our products by using Microsoft Clarity to see how you use our website. By using our site, you agree that we and Microsoft can collect and use this data.{" "}
+            <Link
+              href="/privacy"
+              className="text-white/60 hover:text-secondary underline underline-offset-2 transition-colors"
+            >
+              Learn more in our Privacy Policy
+            </Link>.
+          </p>
         </div>
       </div>
     </footer>
