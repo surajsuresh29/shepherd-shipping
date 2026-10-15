@@ -177,13 +177,6 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1 text-white/40 text-xs">
               <span>© 2026 Shepherd International logistics. All rights reserved</span>
-              <span>•</span>
-              <Link
-                href="/privacy"
-                className="hover:text-secondary underline underline-offset-2 transition-colors"
-              >
-                Privacy Policy
-              </Link>
             </div>
 
             {/* Social links row in bottom bar only */}
@@ -223,7 +216,7 @@ export default function Footer() {
               className="hover:text-secondary underline underline-offset-2 transition-colors"
               style={{ color: "#5C6E8A" }}
             >
-              Learn more
+              Privacy Policy
             </Link>.
           </p>
         </div>
