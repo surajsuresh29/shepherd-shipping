@@ -27,7 +27,7 @@ import MicrosoftClarity from "../components/MicrosoftClarity";
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${playfair.variable} antialiased scroll-pt-32`}>
-      <body className="min-h-full flex flex-col font-sans">
+      <body suppressHydrationWarning className="min-h-full flex flex-col font-sans">
         <MicrosoftClarity />
         <Navbar />
         {children}
