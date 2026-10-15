@@ -14,6 +14,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://shepherdshipping.com"),
   title: "Shepherd International Logistics | Dubai Freight Forwarder Since 2004",
   description:
     "Shepherd International Logistics is a leading Dubai freight forwarding company, offering complete freight solutions with trusted Dubai freight forwarders across the UAE and worldwide since 2004.",
