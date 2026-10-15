@@ -215,14 +215,15 @@ export default function Footer() {
 
       {/* Microsoft Clarity Disclosure — third footer tier */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4 text-center md:text-left">
-          <p className="text-xs leading-relaxed max-w-4xl" style={{ color: "#8CA0C0" }}>
-            We improve our products by using Microsoft Clarity to see how you use our website. By using our site, you agree that we and Microsoft can collect and use this data.{" "}
+        <div className="max-w-7xl mx-auto px-6 py-3 text-center md:text-left">
+          <p style={{ fontSize: "11.5px", lineHeight: "1.6", color: "#5C6E8A" }}>
+            We use Microsoft Clarity to understand how you use our site. By continuing, you agree that we and Microsoft may collect and use this data.{" "}
             <Link
               href="/privacy"
-              className="text-white/60 hover:text-secondary underline underline-offset-2 transition-colors"
+              className="hover:text-secondary underline underline-offset-2 transition-colors"
+              style={{ color: "#5C6E8A" }}
             >
-              Learn more in our Privacy Policy
+              Learn more
             </Link>.
           </p>
         </div>
