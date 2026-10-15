@@ -1,16 +1,28 @@
 "use client";
 
+import { useEffect } from "react";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 
 export default function MicrosoftClarity() {
   const pathname = usePathname();
-  const projectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+  const rawId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+  const projectId = rawId?.trim();
+
+  // Shared layout stop-signal: proactively stop tracking if route enters /outstatic
+  useEffect(() => {
+    if (pathname && pathname.startsWith("/outstatic")) {
+      const win = window as unknown as { clarity?: (...args: unknown[]) => void };
+      if (typeof win.clarity === "function") {
+        win.clarity("stop");
+      }
+    }
+  }, [pathname]);
 
   // Guard Clause: skip if not configured, set to placeholder, or on Outstatic routes
   if (
     !projectId ||
-    projectId.trim() === "" ||
+    projectId === "" ||
     projectId === "YOUR_CLARITY_PROJECT_ID" ||
     (pathname && pathname.startsWith("/outstatic"))
   ) {
