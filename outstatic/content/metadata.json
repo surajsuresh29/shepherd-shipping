@@ -1,6 +1,6 @@
 {
-  "commit": "2a2a03bf06856d3380551a5067f0e584b7c014b6",
-  "generated": "2026-11-03T17:16:13.408Z",
+  "commit": "e09a723ea46ece0fd400991a85fa2541352ad684",
+  "generated": "2026-11-03T19:37:05.216Z",
   "metadata": [
     {
       "__outstatic": {
@@ -87,6 +87,22 @@
       "slug": "test-article-nov-3",
       "status": "published",
       "title": "Test Article - Nov 3"
+    },
+    {
+      "__outstatic": {
+        "commit": "e09a723ea46ece0fd400991a85fa2541352ad684",
+        "hash": "971851417",
+        "path": "outstatic/content/posts/test-article-nov-4.md"
+      },
+      "author": {
+        "name": "Suraj Suresh",
+        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
+      },
+      "collection": "posts",
+      "publishedAt": "2026-11-03T19:33:22.122Z",
+      "slug": "test-article-nov-4",
+      "status": "published",
+      "title": "Test Article Nov 4"
     }
   ]
 }
