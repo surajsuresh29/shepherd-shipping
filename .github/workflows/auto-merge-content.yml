@@ -1,0 +1,54 @@
+name: Auto-Merge Outstatic Content to Main
+
+on:
+  push:
+    branches:
+      - content
+
+jobs:
+  validate-and-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CONTENT_MERGE_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Verify only Outstatic files were changed
+        run: |
+          git fetch origin main
+
+          # Get all files changed on 'content' relative to 'origin/main'
+          CHANGED_FILES=$(git diff --name-only origin/main...origin/content)
+
+          echo "Changed files detected:"
+          echo "$CHANGED_FILES"
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No changes detected between content and main. Nothing to merge."
+            exit 0
+          fi
+
+          # Strictly allow ONLY outstatic/ and public/media/ paths
+          for file in $CHANGED_FILES; do
+            if [[ ! "$file" =~ ^outstatic/ ]] && [[ ! "$file" =~ ^public/media/ ]]; then
+              echo "❌ SECURITY CHECK FAILED: File '$file' is outside allowed Outstatic directories!"
+              echo "Automatic merge aborted. Only outstatic/ and public/media/ can be auto-merged."
+              exit 1
+            fi
+          done
+
+          echo "✅ All modified files are verified Outstatic content. Proceeding with merge."
+
+      - name: Merge content into main
+        run: |
+          git checkout main
+          git pull origin main
+          git merge origin/content --no-edit -m "chore: auto-merge Outstatic blog updates [content -> main]"
+          git push origin main

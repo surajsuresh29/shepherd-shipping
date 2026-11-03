@@ -1,0 +1,25 @@
+name: Sync Main to Content Branch
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CONTENT_MERGE_TOKEN }}
+
+      - name: Fast-forward content branch to match main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin content
+          git checkout content
+          git merge origin/main --ff-only || git merge origin/main --no-edit -m "chore: sync main into content"
+          git push origin content
