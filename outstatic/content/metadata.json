@@ -1,6 +1,6 @@
 {
-  "commit": "1cfa1e4ce321674c63e4b0f3e1423b1a78667c3a",
-  "generated": "2026-11-03T19:33:40.105Z",
+  "commit": "e09a723ea46ece0fd400991a85fa2541352ad684",
+  "generated": "2026-11-03T19:37:05.216Z",
   "metadata": [
     {
       "__outstatic": {
@@ -90,8 +90,8 @@
     },
     {
       "__outstatic": {
-        "commit": "1cfa1e4ce321674c63e4b0f3e1423b1a78667c3a",
-        "hash": "3490010275",
+        "commit": "e09a723ea46ece0fd400991a85fa2541352ad684",
+        "hash": "971851417",
         "path": "outstatic/content/posts/test-article-nov-4.md"
       },
       "author": {
@@ -101,7 +101,7 @@
       "collection": "posts",
       "publishedAt": "2026-11-03T19:33:22.122Z",
       "slug": "test-article-nov-4",
-      "status": "draft",
+      "status": "published",
       "title": "Test Article Nov 4"
     }
   ]
