@@ -34,6 +34,14 @@ export interface EnquiryState {
     expectedDate?: string;
     origin?: string;
     destination?: string;
+    weight?: string;
+    weightUnit?: string;
+    volume?: string;
+    volumeUnit?: string;
+    fclLcl?: string;
+    incoterms?: string;
+    hazardous?: string;
+    hazardousNotes?: string;
   };
   timestamp?: number;
 }
@@ -77,6 +85,14 @@ const enquirySchema = z.object({
   expectedDate: z.string().trim().optional(),
   origin: z.string().trim().optional(),
   destination: z.string().trim().optional(),
+  weight: z.string().trim().max(20).optional(),
+  weightUnit: z.string().trim().max(10).optional(),
+  volume: z.string().trim().max(20).optional(),
+  volumeUnit: z.string().trim().max(10).optional(),
+  fclLcl: z.string().trim().max(20).optional(),
+  incoterms: z.string().trim().max(10).optional(),
+  hazardous: z.string().trim().optional(),
+  hazardousNotes: z.string().trim().max(500).optional(),
   turnstileToken: z
     .string()
     .min(1, "Please complete the security verification challenge"),
@@ -105,6 +121,14 @@ export async function sendEnquiry(
     expectedDate: (formData.get("expectedDate") || "").toString(),
     origin: (formData.get("origin") || "").toString(),
     destination: (formData.get("destination") || "").toString(),
+    weight: (formData.get("weight") || "").toString(),
+    weightUnit: (formData.get("weightUnit") || "kg").toString(),
+    volume: (formData.get("volume") || "").toString(),
+    volumeUnit: (formData.get("volumeUnit") || "cbm").toString(),
+    fclLcl: (formData.get("fclLcl") || "").toString(),
+    incoterms: (formData.get("incoterms") || "").toString(),
+    hazardous: (formData.get("hazardous") || "false").toString(),
+    hazardousNotes: (formData.get("hazardousNotes") || "").toString(),
     turnstileToken: (
       formData.get("turnstileToken") ||
       formData.get("cf-turnstile-response") ||
@@ -137,6 +161,14 @@ export async function sendEnquiry(
         expectedDate: rawData.expectedDate,
         origin: rawData.origin,
         destination: rawData.destination,
+        weight: rawData.weight,
+        weightUnit: rawData.weightUnit,
+        volume: rawData.volume,
+        volumeUnit: rawData.volumeUnit,
+        fclLcl: rawData.fclLcl,
+        incoterms: rawData.incoterms,
+        hazardous: rawData.hazardous,
+        hazardousNotes: rawData.hazardousNotes,
       },
       timestamp: Date.now(),
     };
@@ -223,6 +255,53 @@ export async function sendEnquiry(
   const fromEmail =
     process.env.RESEND_FROM_EMAIL || "Shepherd Logistics <onboarding@resend.dev>";
 
+  // Optional shipment-details rows: only rendered when the visitor actually
+  // filled that section, so a minimal enquiry still produces a clean email.
+  const isHazardous = data.hazardous === "true";
+  const shipmentDetailRows: string[] = [];
+
+  if (data.weight || data.volume) {
+    const weightText = data.weight
+      ? `${escapeHtml(data.weight)} ${escapeHtml(data.weightUnit || "kg")}`
+      : "—";
+    const volumeText = data.volume
+      ? `${escapeHtml(data.volume)} ${escapeHtml(data.volumeUnit || "cbm")}`
+      : "—";
+    shipmentDetailRows.push(`
+      <tr style="border-bottom: 1px solid #f1f5f9;">
+        <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Weight / Volume:</td>
+        <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${weightText} / ${volumeText}</td>
+      </tr>`);
+  }
+
+  if (data.fclLcl) {
+    shipmentDetailRows.push(`
+      <tr style="border-bottom: 1px solid #f1f5f9;">
+        <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Load Type:</td>
+        <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${escapeHtml(data.fclLcl)}</td>
+      </tr>`);
+  }
+
+  if (data.incoterms) {
+    shipmentDetailRows.push(`
+      <tr style="border-bottom: 1px solid #f1f5f9;">
+        <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Incoterms:</td>
+        <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${escapeHtml(data.incoterms)}</td>
+      </tr>`);
+  }
+
+  const hazardousBlock = isHazardous
+    ? `
+          <div style="background-color: #fef2f2; border-left: 4px solid #dc2626; padding: 14px 16px; margin-top: 16px; border-radius: 4px;">
+            <p style="margin: 0 0 6px 0; color: #991b1b; font-size: 12px; font-weight: 700; text-transform: uppercase;">⚠ Contains dangerous / hazardous goods</p>
+            <p style="margin: 0; color: #7f1d1d; font-size: 14px; white-space: pre-wrap; line-height: 1.5;">${
+              data.hazardousNotes
+                ? escapeHtml(data.hazardousNotes)
+                : "No additional details provided."
+            }</p>
+          </div>`
+    : "";
+
   try {
     const { error: sendError } = await resend.emails.send({
       from: fromEmail,
@@ -265,7 +344,7 @@ export async function sendEnquiry(
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Lane / Route:</td>
                 <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.origin ? escapeHtml(data.origin) : "Origin not specified"} &rarr; ${data.destination ? escapeHtml(data.destination) : "Destination not specified"}</td>
-              </tr>
+              </tr>${shipmentDetailRows.join("")}
             </tbody>
           </table>
 
@@ -273,7 +352,7 @@ export async function sendEnquiry(
             <p style="margin: 0 0 6px 0; color: #64748b; font-size: 12px; font-weight: 600; text-transform: uppercase;">Shipment Details / Message:</p>
             <p style="margin: 0; color: #0F2C4E; font-size: 14px; white-space: pre-wrap; line-height: 1.5;">${escapeHtml(data.message)}</p>
           </div>
-
+${hazardousBlock}
           <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center;">
             This email was sent from the Shepherd Shipping website contact form.
           </div>

@@ -49,18 +49,29 @@ const navLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [hideOnScroll, setHideOnScroll] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const servicesRef = useRef<HTMLLIElement>(null);
+  const lastScrollY = useRef(0);
   const pathname = usePathname();
 
+  // Hide the fixed header while scrolling down past the hero, reveal it again
+  // when scrolling up — so it never sits on top of content the visitor is
+  // actively reading (it always reappears if a menu is open).
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentY = window.scrollY;
+      setIsScrolled(currentY > 20);
+      const scrollingDown = currentY > lastScrollY.current;
+      setHideOnScroll(
+        scrollingDown && currentY > 160 && !mobileOpen && !servicesOpen
+      );
+      lastScrollY.current = currentY;
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [mobileOpen, servicesOpen]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -96,7 +107,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? "bg-transparent pt-4 px-4" : "bg-primary pt-0 px-0"
-      }`}
+      } ${hideOnScroll ? "-translate-y-[calc(100%+1rem)]" : "translate-y-0"}`}
     >
       <nav
         className={`mx-auto flex items-center justify-between px-6 lg:px-10 py-4 transition-all duration-300 ${

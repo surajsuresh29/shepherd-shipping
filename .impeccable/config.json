@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "app/actions/send-enquiry.ts"
+        ],
+        "createdAt": "2026-11-03T20:10:11.386Z",
+        "reason": "email HTML sent via Resend, not web UI — border-left accents are a standard, domain-appropriate callout technique for HTML email clients (Outlook etc. have unreliable box-shadow/flex/grid support), not an AI-slop tell here"
+      }
+    ]
+  }
+}

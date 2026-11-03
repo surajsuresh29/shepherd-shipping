@@ -120,9 +120,11 @@ export default function ContactClient() {
   const formRef = useRef<HTMLFormElement>(null);
   const confirmationRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const errorSummaryRef = useRef<HTMLDivElement>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
   const [isDismissed, setIsDismissed] = useState(false);
   const [formKey, setFormKey] = useState(0);
+  const [detailsOpen, setDetailsOpen] = useState(false);
 
   // Controlled form state so values are retained during validation errors
   const [formData, setFormData] = useState({
@@ -135,7 +137,20 @@ export default function ContactClient() {
     origin: "",
     destination: "",
     details: "",
+    weight: "",
+    weightUnit: "kg",
+    volume: "",
+    volumeUnit: "cbm",
+    fclLcl: "",
+    incoterms: "",
+    hazardous: false,
+    hazardousNotes: "",
   });
+
+  // FCL/LCL only applies to container shipments
+  const showFclLcl =
+    formData.shipmentType === "Sea Freight" ||
+    formData.shipmentType === "Multimodal / Project Cargo";
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -147,6 +162,10 @@ export default function ContactClient() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleHazardousChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, hazardous: e.target.checked }));
   };
 
   // Sync with submittedValues returned from server action if available
@@ -162,6 +181,18 @@ export default function ContactClient() {
         origin: state.submittedValues?.origin ?? prev.origin,
         destination: state.submittedValues?.destination ?? prev.destination,
         details: state.submittedValues?.message ?? prev.details,
+        weight: state.submittedValues?.weight ?? prev.weight,
+        weightUnit: state.submittedValues?.weightUnit ?? prev.weightUnit,
+        volume: state.submittedValues?.volume ?? prev.volume,
+        volumeUnit: state.submittedValues?.volumeUnit ?? prev.volumeUnit,
+        fclLcl: state.submittedValues?.fclLcl ?? prev.fclLcl,
+        incoterms: state.submittedValues?.incoterms ?? prev.incoterms,
+        hazardous:
+          state.submittedValues?.hazardous !== undefined
+            ? state.submittedValues.hazardous === "true"
+            : prev.hazardous,
+        hazardousNotes:
+          state.submittedValues?.hazardousNotes ?? prev.hazardousNotes,
       }));
     }
   }, [state.timestamp, state.success, state.submittedValues]);
@@ -180,6 +211,24 @@ export default function ContactClient() {
       setTurnstileToken("");
     }
   }, [state.timestamp, state.success]);
+
+  // On a failed submission, bring the error summary into view and move focus to it
+  // so errors above the fold (e.g. Full Name, Email) are never missed.
+  useEffect(() => {
+    if (!state.timestamp || state.success) return;
+    const timer = setTimeout(() => {
+      errorSummaryRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      errorSummaryRef.current?.focus();
+    }, 60);
+    return () => clearTimeout(timer);
+  }, [state.timestamp, state.success]);
+
+  const fieldErrorCount = Object.entries(state.errors ?? {}).filter(
+    ([key, value]) => key !== "_form" && Array.isArray(value) && value.length > 0
+  ).length;
 
   // When form is submitted successfully, scroll directly to the confirmation card
   useEffect(() => {
@@ -202,6 +251,7 @@ export default function ContactClient() {
   const handleResetForm = () => {
     setIsDismissed(true);
     setFormKey((prev) => prev + 1);
+    setDetailsOpen(false);
     setFormData({
       fullName: "",
       company: "",
@@ -212,6 +262,14 @@ export default function ContactClient() {
       origin: "",
       destination: "",
       details: "",
+      weight: "",
+      weightUnit: "kg",
+      volume: "",
+      volumeUnit: "cbm",
+      fclLcl: "",
+      incoterms: "",
+      hazardous: false,
+      hazardousNotes: "",
     });
     setTurnstileToken("");
     turnstileRef.current?.reset();
@@ -349,7 +407,7 @@ export default function ContactClient() {
           {state.success && !isDismissed ? (
             <div
               ref={confirmationRef}
-              className="bg-white border-l-4 border-[#51B0B7] p-8 sm:p-10 text-left shadow-sm rounded-xs scroll-mt-32 my-4"
+              className="bg-white p-8 sm:p-10 text-left shadow-sm ring-1 ring-slate-100 rounded-lg scroll-mt-32 my-4"
             >
               <div className="flex items-start gap-4">
                 <CheckCircle2 className="w-7 h-7 text-[#51B0B7] flex-shrink-0 mt-0.5" />
@@ -380,14 +438,29 @@ export default function ContactClient() {
               className="text-left"
               noValidate
             >
-              {/* Form-level error alert */}
-              {state.errors?._form && (
-                <div className="mb-6 p-4 rounded-md bg-red-50 border border-red-200 text-red-800 text-sm flex items-start gap-3">
+              {/* Error summary: announced to screen readers and scrolled into view so
+                  errors are never missed, whether they're server-level or per-field. */}
+              {(state.errors?._form || fieldErrorCount > 0) && (
+                <div
+                  ref={errorSummaryRef}
+                  tabIndex={-1}
+                  role="alert"
+                  aria-live="assertive"
+                  className="mb-6 p-4 rounded-md bg-red-50 border border-red-200 text-red-800 text-sm flex items-start gap-3 scroll-mt-28 focus:outline-none"
+                >
                   <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold block">Submission error</span>
+                    <span className="font-semibold block">
+                      {state.errors?._form
+                        ? "Submission error"
+                        : fieldErrorCount === 1
+                        ? "1 field needs your attention"
+                        : `${fieldErrorCount} fields need your attention`}
+                    </span>
                     <p className="text-xs mt-0.5 text-red-700">
-                      {state.errors._form[0]}
+                      {state.errors?._form
+                        ? state.errors._form[0]
+                        : "Please review the highlighted fields below and try again."}
                     </p>
                   </div>
                 </div>
@@ -417,7 +490,7 @@ export default function ContactClient() {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="Your name"
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
                   />
                   {state.errors?.name && (
                     <p className="text-xs text-red-600 mt-1.5 font-medium">
@@ -441,7 +514,7 @@ export default function ContactClient() {
                     value={formData.company}
                     onChange={handleChange}
                     placeholder="Company name"
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
                   />
                   {state.errors?.company && (
                     <p className="text-xs text-red-600 mt-1.5 font-medium">
@@ -466,7 +539,7 @@ export default function ContactClient() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="you@company.com"
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
                   />
                   {state.errors?.email && (
                     <p className="text-xs text-red-600 mt-1.5 font-medium">
@@ -490,7 +563,7 @@ export default function ContactClient() {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="+971..."
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
                   />
                   {state.errors?.phone && (
                     <p className="text-xs text-red-600 mt-1.5 font-medium">
@@ -512,7 +585,7 @@ export default function ContactClient() {
                     name="shipmentType"
                     value={formData.shipmentType}
                     onChange={handleChange}
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors cursor-pointer"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors cursor-pointer"
                   >
                     <option value="Air Freight">Air Freight</option>
                     <option value="Sea Freight">Sea Freight</option>
@@ -542,7 +615,7 @@ export default function ContactClient() {
                     value={formData.expectedDate}
                     onChange={handleChange}
                     placeholder="e.g. Mid-November"
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
                   />
                 </div>
 
@@ -561,7 +634,7 @@ export default function ContactClient() {
                     value={formData.origin}
                     onChange={handleChange}
                     placeholder="City, country"
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
                   />
                 </div>
 
@@ -580,7 +653,7 @@ export default function ContactClient() {
                     value={formData.destination}
                     onChange={handleChange}
                     placeholder="City, country"
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
                   />
                 </div>
 
@@ -600,7 +673,7 @@ export default function ContactClient() {
                     value={formData.details}
                     onChange={handleChange}
                     placeholder="Cargo type, approximate weight/volume, any special handling requirements..."
-                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:ring-0 focus:outline-none transition-colors resize-y"
+                    className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors resize-y"
                   />
                   {state.errors?.message && (
                     <p className="text-xs text-red-600 mt-1.5 font-medium">
@@ -610,6 +683,171 @@ export default function ContactClient() {
                 </div>
               </div>
 
+              {/* Optional shipment details: weight/volume, load type, Incoterms,
+                  dangerous goods — collapsed by default to keep the core form short */}
+              <button
+                type="button"
+                onClick={() => setDetailsOpen((prev) => !prev)}
+                aria-expanded={detailsOpen}
+                aria-controls="shipment-details-panel"
+                className="mt-6 text-xs font-semibold text-[#184478] hover:text-[#51B0B7] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm cursor-pointer"
+              >
+                {detailsOpen
+                  ? "− Hide shipment details"
+                  : "+ Add shipment details (weight, volume, Incoterms...)"}
+              </button>
+
+              {detailsOpen && (
+                <div
+                  id="shipment-details-panel"
+                  className="mt-6 pt-6 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7"
+                >
+                  {/* Weight */}
+                  <div>
+                    <label
+                      htmlFor="weight"
+                      className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
+                    >
+                      Weight
+                    </label>
+                    <div className="flex items-end gap-3">
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        min="0"
+                        step="any"
+                        id="weight"
+                        name="weight"
+                        value={formData.weight}
+                        onChange={handleChange}
+                        placeholder="0"
+                        className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
+                      />
+                      <select
+                        id="weightUnit"
+                        name="weightUnit"
+                        aria-label="Weight unit"
+                        value={formData.weightUnit}
+                        onChange={handleChange}
+                        className="flex-shrink-0 bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors cursor-pointer"
+                      >
+                        <option value="kg">kg</option>
+                        <option value="lb">lb</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Volume */}
+                  <div>
+                    <label
+                      htmlFor="volume"
+                      className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
+                    >
+                      Volume
+                    </label>
+                    <div className="flex items-end gap-3">
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        min="0"
+                        step="any"
+                        id="volume"
+                        name="volume"
+                        value={formData.volume}
+                        onChange={handleChange}
+                        placeholder="0"
+                        className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors"
+                      />
+                      <select
+                        id="volumeUnit"
+                        name="volumeUnit"
+                        aria-label="Volume unit"
+                        value={formData.volumeUnit}
+                        onChange={handleChange}
+                        className="flex-shrink-0 bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors cursor-pointer"
+                      >
+                        <option value="cbm">CBM</option>
+                        <option value="cft">CFT</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Load type — only relevant for container shipments */}
+                  {showFclLcl && (
+                    <div>
+                      <label
+                        htmlFor="fclLcl"
+                        className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
+                      >
+                        Load type
+                      </label>
+                      <select
+                        id="fclLcl"
+                        name="fclLcl"
+                        value={formData.fclLcl}
+                        onChange={handleChange}
+                        className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors cursor-pointer"
+                      >
+                        <option value="">Not sure</option>
+                        <option value="FCL">FCL (Full Container Load)</option>
+                        <option value="LCL">LCL (Less than Container Load)</option>
+                      </select>
+                    </div>
+                  )}
+
+                  {/* Incoterms */}
+                  <div>
+                    <label
+                      htmlFor="incoterms"
+                      className="block text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider mb-1.5"
+                    >
+                      Incoterms
+                    </label>
+                    <select
+                      id="incoterms"
+                      name="incoterms"
+                      value={formData.incoterms}
+                      onChange={handleChange}
+                      className="w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors cursor-pointer"
+                    >
+                      <option value="">Not sure</option>
+                      <option value="EXW">EXW</option>
+                      <option value="FOB">FOB</option>
+                      <option value="CIF">CIF</option>
+                      <option value="DAP">DAP</option>
+                      <option value="DDP">DDP</option>
+                    </select>
+                  </div>
+
+                  {/* Dangerous goods */}
+                  <div className="sm:col-span-2">
+                    <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        name="hazardous"
+                        value="true"
+                        checked={formData.hazardous}
+                        onChange={handleHazardousChange}
+                        className="w-4 h-4 accent-[#51B0B7] rounded-sm cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB]"
+                      />
+                      <span className="text-xs font-semibold text-[#0F2C4E] uppercase tracking-wider">
+                        This shipment contains dangerous / hazardous goods
+                      </span>
+                    </label>
+                    {formData.hazardous && (
+                      <textarea
+                        name="hazardousNotes"
+                        rows={2}
+                        value={formData.hazardousNotes}
+                        onChange={handleChange}
+                        placeholder="UN number, class, or handling notes"
+                        className="mt-3 w-full bg-transparent border-0 border-b border-slate-300 rounded-none px-0 py-2.5 text-sm text-[#0F2C4E] placeholder:text-slate-400 focus:border-[#51B0B7] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#51B0B7]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F6F8FB] rounded-sm transition-colors resize-y"
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Cloudflare Turnstile Verification Widget */}
               <div className="mt-8 pt-2">
                 <div className="flex flex-col gap-2">
@@ -617,6 +855,9 @@ export default function ContactClient() {
                     <ShieldCheck className="w-4 h-4 text-[#51B0B7]" />
                     <span>Security Verification</span>
                   </div>
+                  <p className="text-xs text-[#5A6B87] -mt-1">
+                    Quick spam check — takes a second.
+                  </p>
                   <div className="min-h-[65px]">
                     <Turnstile
                       ref={turnstileRef}
@@ -708,8 +949,58 @@ export default function ContactClient() {
             </p>
           </div>
 
-          {/* Manifest Table / Sheet */}
-          <div className="overflow-x-auto border-t border-b border-white/15">
+          {/* Manifest Cards (mobile): one office per card, nothing clipped off-screen */}
+          <div className="sm:hidden border-t border-white/15 divide-y divide-white/10">
+            {officesData.map((office, idx) => (
+              <div key={idx} className="py-5">
+                <div className="font-semibold text-white">{office.name}</div>
+                <div className="text-xs text-[#51B0B7] mt-0.5 mb-3">
+                  {office.sublabel}
+                </div>
+                {office.isComingSoon ? (
+                  <span className="text-slate-500 italic text-sm">
+                    Location details coming soon
+                  </span>
+                ) : (
+                  <dl className="space-y-2.5 text-sm">
+                    <div>
+                      <dt className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                        Address
+                      </dt>
+                      <dd className="text-slate-300 mt-0.5 leading-relaxed">
+                        {office.address}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                        Phone
+                      </dt>
+                      <dd className="mt-0.5 space-y-1">
+                        {office.phones.map((p, pIdx) => (
+                          <a
+                            key={pIdx}
+                            href={`tel:${p.replace(/[^0-9+]/g, "")}`}
+                            className="block text-white hover:text-[#51B0B7] transition-colors"
+                          >
+                            {p}
+                          </a>
+                        ))}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                        Hours
+                      </dt>
+                      <dd className="text-slate-300 mt-0.5">{office.hours}</dd>
+                    </div>
+                  </dl>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Manifest Table / Sheet (tablet and up) */}
+          <div className="hidden sm:block overflow-x-auto border-t border-b border-white/15">
             <table className="w-full text-left text-sm border-collapse min-w-[700px]">
               <thead>
                 <tr className="border-b border-white/15 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
