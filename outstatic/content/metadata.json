@@ -1,6 +1,6 @@
 {
-  "commit": "afaf6133da48c2c8a9e3f51f2a816fbddc214e86",
-  "generated": "2026-10-12T17:05:53.841Z",
+  "commit": "2a2a03bf06856d3380551a5067f0e584b7c014b6",
+  "generated": "2026-11-03T17:16:13.408Z",
   "metadata": [
     {
       "__outstatic": {
@@ -71,6 +71,22 @@
       "slug": "test-cover-image",
       "status": "published",
       "title": "test cover image"
+    },
+    {
+      "__outstatic": {
+        "commit": "2a2a03bf06856d3380551a5067f0e584b7c014b6",
+        "hash": "3861781776",
+        "path": "outstatic/content/posts/test-article-nov-3.md"
+      },
+      "author": {
+        "name": "Suraj Suresh",
+        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
+      },
+      "collection": "posts",
+      "publishedAt": "2026-11-03T17:15:43.943Z",
+      "slug": "test-article-nov-3",
+      "status": "published",
+      "title": "Test Article - Nov 3"
     }
   ]
 }
