@@ -3,6 +3,15 @@
 import { z } from "zod";
 import { Resend } from "resend";
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export interface EnquiryState {
   success: boolean;
   message?: string;
@@ -219,7 +228,7 @@ export async function sendEnquiry(
       from: fromEmail,
       to: [toEmail],
       replyTo: data.email,
-      subject: `New Cargo Enquiry: ${data.serviceType || "Freight Service"} — ${data.name}`,
+      subject: `New Cargo Enquiry: ${escapeHtml(data.serviceType || "Freight Service")} — ${escapeHtml(data.name)}`,
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #ffffff;">
           <div style="border-bottom: 2px solid #184478; padding-bottom: 16px; margin-bottom: 24px;">
@@ -231,38 +240,38 @@ export async function sendEnquiry(
             <tbody>
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600; width: 140px;">Full Name:</td>
-                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px; font-weight: 500;">${data.name}</td>
+                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px; font-weight: 500;">${escapeHtml(data.name)}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Email:</td>
-                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;"><a href="mailto:${data.email}" style="color: #184478;">${data.email}</a></td>
+                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;"><a href="mailto:${escapeHtml(data.email)}" style="color: #184478;">${escapeHtml(data.email)}</a></td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Phone:</td>
-                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.phone || "—"}</td>
+                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.phone ? escapeHtml(data.phone) : "—"}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Company:</td>
-                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.company || "—"}</td>
+                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.company ? escapeHtml(data.company) : "—"}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Service Type:</td>
-                <td style="padding: 10px 0; color: #184478; font-size: 14px; font-weight: 600;">${data.serviceType || "Not specified"}</td>
+                <td style="padding: 10px 0; color: #184478; font-size: 14px; font-weight: 600;">${data.serviceType ? escapeHtml(data.serviceType) : "Not specified"}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Expected Date:</td>
-                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.expectedDate || "—"}</td>
+                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.expectedDate ? escapeHtml(data.expectedDate) : "—"}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
                 <td style="padding: 10px 0; color: #64748b; font-size: 13px; font-weight: 600;">Lane / Route:</td>
-                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.origin || "Origin not specified"} &rarr; ${data.destination || "Destination not specified"}</td>
+                <td style="padding: 10px 0; color: #0F2C4E; font-size: 14px;">${data.origin ? escapeHtml(data.origin) : "Origin not specified"} &rarr; ${data.destination ? escapeHtml(data.destination) : "Destination not specified"}</td>
               </tr>
             </tbody>
           </table>
 
           <div style="background-color: #f8fafc; border-left: 4px solid #51B0B7; padding: 14px 16px; margin-top: 16px; border-radius: 4px;">
             <p style="margin: 0 0 6px 0; color: #64748b; font-size: 12px; font-weight: 600; text-transform: uppercase;">Shipment Details / Message:</p>
-            <p style="margin: 0; color: #0F2C4E; font-size: 14px; white-space: pre-wrap; line-height: 1.5;">${data.message}</p>
+            <p style="margin: 0; color: #0F2C4E; font-size: 14px; white-space: pre-wrap; line-height: 1.5;">${escapeHtml(data.message)}</p>
           </div>
 
           <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #94a3b8; text-align: center;">
