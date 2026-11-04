@@ -1,7 +1,19 @@
 {
-  "commit": "7c9f884f52e03228025cf831c5ff147e2240030e",
-  "generated": "2026-10-11T10:56:28.884Z",
+  "commit": "d97de9ec2d1388a615f400460975089d3cb4d2f8",
+  "generated": "2026-11-04T10:15:11.901Z",
   "media": [
+    {
+      "__outstatic": {
+        "commit": "d97de9ec2d1388a615f400460975089d3cb4d2f8",
+        "hash": "4260373542",
+        "path": "public/media/images/logo-U3ND.svg"
+      },
+      "alt": "",
+      "filename": "logo-U3ND.svg",
+      "publishedAt": "2026-11-04T10:15:11.897Z",
+      "source": "images",
+      "type": "image"
+    },
     {
       "__outstatic": {
         "commit": "7c9f884f52e03228025cf831c5ff147e2240030e",
