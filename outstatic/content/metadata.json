@@ -1,6 +1,6 @@
 {
-  "commit": "d5255f1e35ea3956e08bdbb2a18590cacaa5da22",
-  "generated": "2026-11-16T06:33:14.767Z",
+  "commit": "e3e6366b3081d24524370e5e175db666d87b7a62",
+  "generated": "2026-11-16T06:35:45.717Z",
   "metadata": [
     {
       "__outstatic": {
@@ -103,22 +103,6 @@
       "slug": "test-article-nov-4",
       "status": "published",
       "title": "Test Article Nov 4"
-    },
-    {
-      "__outstatic": {
-        "commit": "d97de9ec2d1388a615f400460975089d3cb4d2f8",
-        "hash": "2551710901",
-        "path": "outstatic/content/posts/test-post-post-production.md"
-      },
-      "author": {
-        "name": "Suraj Suresh",
-        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
-      },
-      "collection": "posts",
-      "publishedAt": "2026-11-04T10:14:24.054Z",
-      "slug": "test-post-post-production",
-      "status": "published",
-      "title": "Test Post - post production"
     },
     {
       "__outstatic": {
