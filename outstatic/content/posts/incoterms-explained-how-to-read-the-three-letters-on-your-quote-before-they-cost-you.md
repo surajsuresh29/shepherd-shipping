@@ -1,7 +1,7 @@
 ---
 title: "Incoterms Explained: How to Read the Three Letters on Your Quote Before They Cost You"
 publishedAt: 2026-11-16T06:26:58.487Z
-status: draft
+status: published
 author:
   name: "Anil Kanattu "
   picture: /media/images/logo-U3ND.svg

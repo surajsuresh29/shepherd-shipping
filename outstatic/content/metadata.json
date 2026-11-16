@@ -1,6 +1,6 @@
 {
-  "commit": "5b9ad515f98ad9c96164ab3b98e605ec2ad2ebe6",
-  "generated": "2026-11-16T06:32:34.646Z",
+  "commit": "d5255f1e35ea3956e08bdbb2a18590cacaa5da22",
+  "generated": "2026-11-16T06:33:14.767Z",
   "metadata": [
     {
       "__outstatic": {
@@ -122,8 +122,8 @@
     },
     {
       "__outstatic": {
-        "commit": "5b9ad515f98ad9c96164ab3b98e605ec2ad2ebe6",
-        "hash": "4085484215",
+        "commit": "d5255f1e35ea3956e08bdbb2a18590cacaa5da22",
+        "hash": "3999979766",
         "path": "outstatic/content/posts/incoterms-explained-how-to-read-the-three-letters-on-your-quote-before-they-cost-you.md"
       },
       "author": {
@@ -137,7 +137,7 @@
       "publishedAt": "2026-11-16T06:26:58.487Z",
       "readTime": "5 min read",
       "slug": "incoterms-explained-how-to-read-the-three-letters-on-your-quote-before-they-cost-you",
-      "status": "draft",
+      "status": "published",
       "title": "Incoterms Explained: How to Read the Three Letters on Your Quote Before They Cost You"
     }
   ]
