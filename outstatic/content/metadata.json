@@ -1,6 +1,6 @@
 {
-  "commit": "315b1ef34be27af50703cb5455bd4b947a445cd0",
-  "generated": "2026-11-16T06:31:06.295Z",
+  "commit": "5b9ad515f98ad9c96164ab3b98e605ec2ad2ebe6",
+  "generated": "2026-11-16T06:32:34.646Z",
   "metadata": [
     {
       "__outstatic": {
@@ -122,8 +122,8 @@
     },
     {
       "__outstatic": {
-        "commit": "315b1ef34be27af50703cb5455bd4b947a445cd0",
-        "hash": "3098545151",
+        "commit": "5b9ad515f98ad9c96164ab3b98e605ec2ad2ebe6",
+        "hash": "4085484215",
         "path": "outstatic/content/posts/incoterms-explained-how-to-read-the-three-letters-on-your-quote-before-they-cost-you.md"
       },
       "author": {
