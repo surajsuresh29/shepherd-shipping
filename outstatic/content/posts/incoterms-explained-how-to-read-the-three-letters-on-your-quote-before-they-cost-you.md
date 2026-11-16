@@ -7,7 +7,7 @@ author:
   picture: /media/images/logo-U3ND.svg
 slug: incoterms-explained-how-to-read-the-three-letters-on-your-quote-before-they-cost-you
 description: "FOB, CIF, EXW, DDP: a Dubai freight forwarder explains all 11 Incoterms 2020 rules, how to spot which one you agreed to, and the mistakes that cost money."
-photoCaption: ""
+photoCaption: Colourful shipping containers stacked at a port, ready for export
 category: Logistics
 readTime: 5 min read
 ---

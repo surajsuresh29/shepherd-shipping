@@ -1,6 +1,6 @@
 {
-  "commit": "1ede4eb974abe456d040e61bbd59632b27d89364",
-  "generated": "2026-11-16T06:29:50.871Z",
+  "commit": "315b1ef34be27af50703cb5455bd4b947a445cd0",
+  "generated": "2026-11-16T06:31:06.295Z",
   "metadata": [
     {
       "__outstatic": {
@@ -122,8 +122,8 @@
     },
     {
       "__outstatic": {
-        "commit": "1ede4eb974abe456d040e61bbd59632b27d89364",
-        "hash": "2109613384",
+        "commit": "315b1ef34be27af50703cb5455bd4b947a445cd0",
+        "hash": "3098545151",
         "path": "outstatic/content/posts/incoterms-explained-how-to-read-the-three-letters-on-your-quote-before-they-cost-you.md"
       },
       "author": {
@@ -133,7 +133,7 @@
       "category": "Logistics",
       "collection": "posts",
       "description": "FOB, CIF, EXW, DDP: a Dubai freight forwarder explains all 11 Incoterms 2020 rules, how to spot which one you agreed to, and the mistakes that cost money.",
-      "photoCaption": "",
+      "photoCaption": "Colourful shipping containers stacked at a port, ready for export",
       "publishedAt": "2026-11-16T06:26:58.487Z",
       "readTime": "5 min read",
       "slug": "incoterms-explained-how-to-read-the-three-letters-on-your-quote-before-they-cost-you",
