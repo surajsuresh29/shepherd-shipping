@@ -1,6 +1,6 @@
 {
-  "commit": "560e2925354f6115fff55ff458cd19abd1863bab",
-  "generated": "2026-11-16T06:35:55.578Z",
+  "commit": "23ff9ee2c0747103afa73aff376fe91f8ba62655",
+  "generated": "2026-11-18T17:59:23.458Z",
   "metadata": [
     {
       "__outstatic": {
@@ -74,22 +74,6 @@
     },
     {
       "__outstatic": {
-        "commit": "e09a723ea46ece0fd400991a85fa2541352ad684",
-        "hash": "971851417",
-        "path": "outstatic/content/posts/test-article-nov-4.md"
-      },
-      "author": {
-        "name": "Suraj Suresh",
-        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
-      },
-      "collection": "posts",
-      "publishedAt": "2026-11-03T19:33:22.122Z",
-      "slug": "test-article-nov-4",
-      "status": "published",
-      "title": "Test Article Nov 4"
-    },
-    {
-      "__outstatic": {
         "commit": "d5255f1e35ea3956e08bdbb2a18590cacaa5da22",
         "hash": "3999979766",
         "path": "outstatic/content/posts/incoterms-explained-how-to-read-the-three-letters-on-your-quote-before-they-cost-you.md"
@@ -107,6 +91,24 @@
       "slug": "incoterms-explained-how-to-read-the-three-letters-on-your-quote-before-they-cost-you",
       "status": "published",
       "title": "Incoterms Explained: How to Read the Three Letters on Your Quote Before They Cost You"
+    },
+    {
+      "__outstatic": {
+        "commit": "23ff9ee2c0747103afa73aff376fe91f8ba62655",
+        "hash": "2251519158",
+        "path": "outstatic/content/posts/test-article-nov-4.md"
+      },
+      "author": {
+        "name": "Suraj Suresh",
+        "picture": "https://avatars.githubusercontent.com/u/39479214?v=4"
+      },
+      "collection": "posts",
+      "coverImage": "https://plus.unsplash.com/premium_photo-1661963559074-9655a9404f1a?q=80&w=3164&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+      "photoCaption": "Ship Image from URL",
+      "publishedAt": "2026-11-03T19:33:22.122Z",
+      "slug": "test-article-nov-4",
+      "status": "published",
+      "title": "Test Article Nov 4"
     }
   ]
 }
